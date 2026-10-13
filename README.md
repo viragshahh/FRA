@@ -1,40 +1,44 @@
-# RiskLab — Financial Risk Analytics
+# Portfolio Risk and Optimization
 
-A presentation-ready, editable static website for a Financial Risk Analytics project. It visualizes the workbook's current reported results for portfolio risk, parametric and historical VaR, Expected Shortfall, rolling VaR backtesting, composite risk scoring, and constrained Markowitz optimization.
+A guided, interactive static website for the Financial Risk Analytics project by Section B, Group 3.
+
+## Team
+
+Nishant Kothari  
+Snehasish Samantaray  
+Virag Shah  
+Ashi Jain  
+Priti Jogani
 
 ## Run locally
 
-This is a static site; no build step or database is required.
+Keep index.html, styles.css, app.js and data.js in the same folder. Open index.html in a browser, or use the Live Server extension in Visual Studio Code.
 
-1. Keep `index.html`, `styles.css`, `app.js`, and `data.js` in the same folder.
-2. Open `index.html` in a browser. If your browser restricts local scripts, use VS Code's Live Server extension.
+## Publish with GitHub and Vercel
 
-## Deploy to GitHub + Vercel
+1. Push the repository to GitHub.
+2. In Vercel, import the repository.
+3. Select Other as the framework preset.
+4. Leave the build command blank and use the repository root as the output directory.
+5. Deploy. Later commits to the connected branch will trigger a new deployment.
 
-1. Create a new GitHub repository, for example `fra-risklab`.
-2. Upload all four site files and this README to the repository root.
-3. In Vercel, choose **Add New → Project**, import `fra-risklab`, and deploy.
-4. Framework preset: **Other**. Build command: leave blank. Output directory: `.` (the repository root).
-5. Each commit pushed to the connected GitHub branch triggers a new deployment.
+## Files
 
-## Updating figures after submission
+- index.html contains the page structure and all nine guided sections.
+- styles.css contains the visual design and responsive layout.
+- app.js controls navigation, tables, charts and interactive calculations.
+- data.js contains the project figures embedded from the existing workbook.
 
-- **Data values:** edit `data.js`. It defines `window.FRA_DATA`, the object consumed by `app.js`.
-- **Charts and interpretation:** edit `app.js`.
-- **Visual design:** edit `styles.css`.
-- **Page structure and text:** edit `index.html`.
+## Data quality status
 
-The “Export data” button downloads the site's embedded data as JSON; it does not modify the source repository.
+The displayed workbook figures are preliminary and must not be treated as final. The source workbook contains missing adjusted prices for Siemens and Divi's Laboratories that appear to have generated artificial daily losses. The missing observations and their effects must be resolved before the risk scores, covariance matrices, VaR, Expected Shortfall, backtesting and optimized weights are accepted.
 
-## Important methodology notes
+The calculation lab recalculates a parametric loss threshold from the current summary statistics and the selected confidence level. Since the underlying summary figures remain preliminary, these scenarios are also preliminary.
 
-- The site reflects values extracted from the supplied workbook; it does not silently recalculate or certify the workbook.
-- The workbook uses equal-weight portfolios for the regime VaR/ES matrix sheets and for the rolling VaR backtest. The Markowitz pages separately show optimized weights.
-- Annualized arithmetic mean is daily mean × 252. Annualized volatility is daily standard deviation × √252.
-- Parametric VaR uses the workbook's normal quantile multipliers (1.645 at 95%; 2.326 at 99%). Historical ES is the mean of returns at or below the historical VaR threshold.
-- Markowitz optimization was computed numerically with SLSQP, minimizing annualized variance subject to weights summing to 100%, each weight at least 1%, and expected return at least the target. It was not run through the Excel Solver interface.
-- Figures are historical estimates and not investment advice or live market data. Verify source data and assumptions before relying on them as production risk measures.
+## Method notes
 
-## External libraries
+The project compares a 45 stock universe, two portfolios of ten holdings and three market windows. The stated risk score weights are 30 percent beta, 40 percent annualized volatility and 30 percent maximum drawdown. The Markowitz process minimizes annualized variance subject to a 100 percent weight sum, a minimum holding weight and a return target.
 
-Chart.js is loaded from jsDelivr; fonts are loaded from Google Fonts. An internet connection is required for charts and hosted fonts. Core text and tables remain readable if those external resources fail.
+Historical portfolio selection can introduce lookahead bias when the same full history is used to classify stocks and then compare past periods. Explain whether results are retrospective or truly out of sample before drawing predictive conclusions.
+
+This project is for academic analysis and is not investment advice or live market data.
