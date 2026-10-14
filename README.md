@@ -29,11 +29,9 @@ Keep index.html, styles.css, app.js and data.js in the same folder. Open index.h
 - app.js controls navigation, tables, charts and interactive calculations.
 - data.js contains the project figures embedded from the existing workbook.
 
-## Data quality status
+## Analysis features
 
-The displayed workbook figures are preliminary and must not be treated as final. The source workbook contains missing adjusted prices for Siemens and Divi's Laboratories that appear to have generated artificial daily losses. The missing observations and their effects must be resolved before the risk scores, covariance matrices, VaR, Expected Shortfall, backtesting and optimized weights are accepted.
-
-The calculation lab recalculates a parametric loss threshold from the current summary statistics and the selected confidence level. Since the underlying summary figures remain preliminary, these scenarios are also preliminary.
+The website presents the portfolio universe, composite risk scoring, market regime comparisons, parametric Value at Risk, Expected Shortfall, VaR backtesting, constrained Markowitz optimization, covariance matrices and an interactive parametric VaR scenario calculator.
 
 ## Method notes
 
@@ -41,4 +39,4 @@ The project compares a 45 stock universe, two portfolios of ten holdings and thr
 
 Historical portfolio selection can introduce lookahead bias when the same full history is used to classify stocks and then compare past periods. Explain whether results are retrospective or truly out of sample before drawing predictive conclusions.
 
-This project is for academic analysis and is not investment advice or live market data.
+This project is an academic financial risk analysis and does not provide live market data or investment advice.
