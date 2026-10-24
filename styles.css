@@ -27,3 +27,10 @@ body.theme-dark .formula{background:#162c3a;border-color:#2a4b56;color:#7ed7c8}
 body.theme-dark .section-foot{border-color:var(--line)}
 body.theme-dark .page-intro p,body.theme-dark .content-card>p{color:var(--muted)}
 @media(max-width:760px){.topbar-actions{gap:4px}.topbar-actions .outline-btn{font-size:9px;padding:7px}}
+
+.presentation-status{position:sticky;top:76px;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px clamp(20px,6vw,88px);background:#eaf7f5;border-bottom:1px solid #b9e4dd;color:#175b55;font-size:11px}
+.presentation-status[hidden]{display:none}
+.presentation-status .next-btn:disabled{opacity:.35;cursor:not-allowed}
+.presentation-mode .presentation-status{top:76px}
+body.theme-dark .presentation-status{background:#173433;border-color:#2a5b54;color:#c6e2dd}
+@media(max-width:760px){.presentation-status{top:62px;padding:8px 12px;gap:5px}.presentation-status .next-btn{font-size:10px;padding:5px}}
