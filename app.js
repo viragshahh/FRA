@@ -154,22 +154,25 @@ function renderOptimization(){
    return '<tr><th scope="row">'+esc(name)+'</th>'+cells+'</tr>';
   }).join('');
   const warnings=cases.filter(c=>c.stocks.length!==10).map(c=>regimeShort[c.r]+': '+c.stocks.length+' named holdings').join('; ');
-  const notes=cases.map(c=>{
-   const ret=Number(c.x.optimizedReturn),vol=Number(c.x.volatility),target=Number(c.x.target);
-   const vols=cases.map(k=>Number(k.x.volatility));
-   const volRank=vol===Math.min(...vols)?'the lowest estimated volatility of the three windows':vol===Math.max(...vols)?'the highest estimated volatility of the three windows':'an estimated volatility between the other two windows';
+  const byVol=[...cases].sort((a,b)=>Number(a.x.volatility)-Number(b.x.volatility));
+  const byReturn=[...cases].sort((a,b)=>Number(b.x.optimizedReturn)-Number(a.x.optimizedReturn));
+  const topHolding=c=>{
    const ranked=[...c.stocks].sort((a,b)=>Number(b.optimizedWeight||0)-Number(a.optimizedWeight||0));
-   const top=ranked.slice(0,2).map(s=>esc(s.stock)+' ('+fmtPct(s.optimizedWeight,1)+')').join(' and ');
-   const topShare=ranked.slice(0,3).reduce((sum,s)=>sum+Number(s.optimizedWeight||0),0);
-   const returnMeaning=Number.isFinite(ret)&&Number.isFinite(target)?(ret>=target?'The estimated return clears the fixed return floor of '+fmtPct(target)+'.':'The estimated return is below the fixed return floor of '+fmtPct(target)+', so check the saved optimization output and constraints.'):'';
-   const note='The optimizer estimates '+fmtPct(ret)+' annualized return with '+fmtPct(vol)+' annualized volatility. This is '+volRank+'. '+returnMeaning+' The largest allocations are '+(top||'not available')+'; the three largest positions together represent '+fmtPct(topShare,1)+' of the portfolio, indicating how concentrated the allocation is. These are model estimates from the selected historical window, not forecasts or guaranteed outcomes.';
-   return '<div class="opt-note"><b>'+regimeShort[c.r]+' · What it means</b><p>'+note+'</p></div>';
-  }).join('');
+   return ranked[0] ? {name:ranked[0].stock,weight:Number(ranked[0].optimizedWeight||0)} : null;
+  };
+  const topByRegime=cases.map(c=>({r:c.r,...(topHolding(c)||{name:'not available',weight:0})}));
+  const largestTop=topByRegime.reduce((a,b)=>a.weight>=b.weight?a:b);
+  const smallestTop=topByRegime.reduce((a,b)=>a.weight<=b.weight?a:b);
+  const crisis=cases.find(c=>c.r==='2020'), calm=cases.find(c=>c.r==='2023'), latest=cases.find(c=>c.r==='18M');
+  const volSentence='Estimated volatility is '+fmtPct(byVol[0].x.volatility)+' in '+regimeShort[byVol[0].r]+', compared with '+fmtPct(byVol[byVol.length-1].x.volatility)+' in '+regimeShort[byVol[byVol.length-1].r]+'. That spread shows how strongly the risk estimate changes across the historical windows.';
+  const returnSentence='The highest optimized return estimate is '+fmtPct(byReturn[0].x.optimizedReturn)+' in '+regimeShort[byReturn[0].r]+', while '+regimeShort[byReturn[byReturn.length-1].r]+' is lowest at '+fmtPct(byReturn[byReturn.length-1].x.optimizedReturn)+'. Read this alongside volatility: the window with the highest return is not necessarily the lowest-risk window.';
+  const allocationSentence='The largest single allocation changes across regimes: '+topByRegime.map(t=>regimeShort[t.r]+': '+esc(t.name)+' at '+fmtPct(t.weight,1)).join('; ')+'. The biggest single-position weight is '+fmtPct(largestTop.weight,1)+' ('+regimeShort[largestTop.r]+'), versus '+fmtPct(smallestTop.weight,1)+' for the largest position in '+regimeShort[smallestTop.r]+'. This is evidence that the optimizer's preferred mix is sensitive to the return and covariance estimates used for each window.';
+  const notes='<div class="opt-note"><b>What stands out across the three regimes</b><p>'+volSentence+' '+returnSentence+' '+allocationSentence+' These are in-sample model estimates, so they describe this dataset and optimization setup rather than a universal rule about crises or a forecast of future performance.</p></div>';
   return '<section class="opt-portfolio-block"><div class="opt-portfolio-heading"><div><div class="eyebrow">PORTFOLIO COMPARISON</div><h2>'+p+'</h2><p>Compare performance metrics across all three regimes.</p></div><span class="pill">Side-by-side view</span></div><div class="opt-regime-cards">'+cards+'</div><div class="opt-subheading"><div><h3>Optimized stock weights</h3><p>Each column is optimized independently using that regime’s return and covariance estimates.</p></div><span class="opt-table-key"><i></i> Portfolio weight</span></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table opt-allocation-table"><thead><tr><th>Company</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+allocation+'</tbody></table></div><div class="opt-regime-notes">'+notes+'</div>'+(warnings?'<p class="data-warning">Data completeness: '+warnings+'. The saved outputs do not identify all ten holdings in these cases; reconcile them with the original workbook before treating the allocation as complete.</p>':'')+'</section>';
  };
  $('#opt-comparison').innerHTML=portfolios.map(portfolioPanel).join('');
  $('#opt-validation').textContent='Method: minimize portfolio variance, with weights summing to 100%, a 1% minimum weight per holding, and the saved expected-return floor.';
- if($('#opt-interpretation'))$('#opt-interpretation').textContent='The regime-specific estimates can lead to different allocations. Higher expected return does not automatically mean lower risk or better future performance.';
+ if($('#opt-interpretation'))$('#opt-interpretation').textContent='Across both portfolios, compare the return and volatility together rather than treating return alone as the winner. In the saved results, Crisis 2020 has the highest optimized return for both portfolios, but it also has the highest volatility for both; Calm 2023 has the lowest volatility for both. The latest 18-month window sits between those volatility levels, while the Low Risk portfolio’s latest-window optimized return is negative. This suggests that the optimizer’s output is highly dependent on the historical window and its estimated returns/covariances—not that a crisis is inherently profitable or that a low-volatility portfolio must earn a positive return.';
  if($('#opt-data-warning'))$('#opt-data-warning').hidden=true;
  updateFinalFindings();
 }
