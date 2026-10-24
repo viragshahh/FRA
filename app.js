@@ -22,16 +22,15 @@ function setSidebarCollapsed(collapsed){
  document.body.classList.toggle('sidebar-collapsed',collapsed);
  if(sidebarToggle){
   sidebarToggle.setAttribute('aria-expanded',String(!collapsed));
-  sidebarToggle.setAttribute('aria-label',collapsed?'Expand sidebar':'Collapse sidebar');
-  sidebarToggle.setAttribute('title',collapsed?'Expand sidebar':'Collapse sidebar');
-  sidebarToggle.innerHTML=collapsed?'☰ <span>Expand sidebar</span>':'☰ <span>Collapse sidebar</span>';
+  sidebarToggle.setAttribute('aria-label',collapsed?'Expand navigation':'Collapse navigation');
+  sidebarToggle.textContent=collapsed?'›':'‹';
  }
  try{localStorage.setItem('fra-sidebar-collapsed',collapsed?'true':'false');}catch(e){}
 }
 let savedSidebarState=null;
 try{savedSidebarState=localStorage.getItem('fra-sidebar-collapsed');}catch(e){}
 setSidebarCollapsed(savedSidebarState==='true');
-sidebarToggle?.addEventListener('click',()=>setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed')));
+sidebarToggle?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();setSidebarCollapsed(!document.body.classList.contains('sidebar-collapsed'));});
 $('#theme-toggle').addEventListener('click',()=>{document.body.classList.toggle('theme-dark');const dark=document.body.classList.contains('theme-dark');localStorage.setItem('fra-theme',dark?'dark':'light');$('#theme-toggle').textContent=dark?'Light mode':'Dark mode';$('#theme-toggle').setAttribute('aria-pressed',String(dark));});
 $('#present-toggle').addEventListener('click',()=>{presentationMode=!presentationMode;document.body.classList.toggle('presentation-mode',presentationMode);$('#present-toggle').textContent=presentationMode?'Exit presentation':'Presentation mode';$('#present-toggle').setAttribute('aria-pressed',String(presentationMode));const s=$('#presentation-status');s.hidden=!presentationMode;if(presentationMode){s.innerHTML='<button type="button" id="present-prev" class="next-btn">← Previous section</button><span id="present-counter"></span><button type="button" id="present-next" class="next-btn">Next section →</button>';$('#present-prev').addEventListener('click',()=>movePresentation(-1));$('#present-next').addEventListener('click',()=>movePresentation(1));updatePresentationStatus();}});
 function movePresentation(delta){const current=Math.max(0,views.findIndex(v=>$('#view-'+v)?.classList.contains('active')));const next=Math.max(0,Math.min(views.length-1,current+delta));nav(views[next]);updatePresentationStatus();}
