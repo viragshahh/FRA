@@ -474,3 +474,12 @@ body.theme-dark #view-optimization .opt-compare-table thead th,body.theme-dark #
 body.theme-dark #view-optimization .opt-compare-table th:first-child{background:#132334}
 body.theme-dark #view-optimization .opt-note{background:#1b3042}
 @media(max-width:760px){#view-optimization .opt-portfolio-block{padding:14px}#view-optimization .opt-regime-cards,#view-optimization .opt-regime-notes{grid-template-columns:1fr}#view-optimization .opt-portfolio-heading{align-items:flex-start;flex-direction:column}#view-optimization .opt-primary-metric strong{font-size:24px}#view-optimization .opt-subheading{align-items:flex-start;flex-direction:column}#view-optimization .opt-compare-table th,#view-optimization .opt-compare-table td{padding:10px}}
+
+/* Readable bullet-point interpretation for Markowitz */
+#view-optimization .opt-insight-list{margin:10px 0 0;padding-left:22px;display:grid;gap:10px}
+#view-optimization .opt-insight-list li{padding-left:4px;font-size:14px;line-height:1.75;color:var(--text)}
+#view-optimization .opt-insight-list li::marker{color:#159b8b;font-weight:700}
+#view-optimization .opt-insight-list strong{font-weight:750;color:var(--text)}
+#view-optimization .opt-global-insights{margin-top:8px;gap:12px}
+#view-optimization .opt-note .opt-insight-list{margin-top:12px}
+@media(max-width:760px){#view-optimization .opt-insight-list li{font-size:13px;line-height:1.7}}
