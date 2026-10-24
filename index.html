@@ -102,11 +102,11 @@
   <div class="section-foot"><span>04 / 08</span><button class="next-btn" data-go="backtest">Next: VaR Backtesting →</button></div>
 </section>
 <section class="view" id="view-backtest">
-<div class="page-intro"><div class="eyebrow">05 • MODEL CHECK</div><h1>VaR backtesting</h1><p>Compare the High Risk and Low Risk portfolios to see how often realized losses breach forecast VaR thresholds.</p><p>Interpret results alongside sample size, exception sequence and model assumptions.</p></div>
-<div class="content-card backtest-method-card"><div class="eyebrow">METHODOLOGY</div><h2>What is being tested?</h2><p>A VaR exception occurs when realized portfolio loss exceeds the forecast loss threshold. At 95% confidence, the nominal exception rate is 5%; at 99%, it is 1%.</p><p>The Kupiec test assesses exception frequency. The Christoffersen independence test assesses whether exceptions are serially independent; conditional coverage tests frequency and independence jointly.</p><p class="interpretation">At p &lt; 0.05, reject the relevant null hypothesis. Non-rejection does not prove model accuracy.</p></div>
+<div class="page-intro"><div class="eyebrow">05 • MODEL CHECK</div><h1>VaR backtesting</h1><p>Compare the High Risk and Low Risk portfolios using the Kupiec p-value only.</p></div>
+<div class="content-card backtest-method-card"><div class="eyebrow">METHODOLOGY</div><h2>What is being tested?</h2><p>The Kupiec test checks whether the observed exception frequency is consistent with the VaR confidence level. At the 5% significance level, <b>p &lt; 0.05</b> means reject the null hypothesis; <b>p ≥ 0.05</b> means do not reject it. No independence or conditional-coverage test is used for the interpretation.</p></div>
 <div class="backtest-period-intro"><div><div class="eyebrow">SIDE-BY-SIDE COMPARISON</div><h2>VaR backtesting across three periods</h2></div></div>
 <div id="backtest-period-comparison" class="backtest-period-comparison"></div>
-<div class="backtest-interpretations"><div class="card-heading"><div><div class="eyebrow">INTERPRETATION</div><h2>What the results mean</h2></div></div><div id="backtest-interpretation-grid" class="backtest-interpretation-grid"></div><p id="backtest-interpretation" class="table-note"></p></div>
+
 <div class="section-foot"><span>05 / 08</span><button class="next-btn" data-go="optimization">Next: Markowitz Optimization →</button></div>
 </section>
 <section class="view" id="view-optimization">
