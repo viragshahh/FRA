@@ -533,7 +533,7 @@ body.theme-dark #view-optimization .opt-note{background:#1b3042}
 body.theme-dark #view-findings .findings-kpi,body.theme-dark #view-findings .findings-observation-card,body.theme-dark #view-findings .findings-regime-card,body.theme-dark #view-findings .findings-limit-card,body.theme-dark #view-findings .findings-reference-card{background:#132334;border-color:var(--line)}
 body.theme-dark #view-findings .finding-tag,body.theme-dark #view-findings .limit-index{background:#22394b;color:#c2d2e0}
 body.theme-dark #view-findings .finding-evidence{background:#173c3a;color:#b7e9df}
-body.theme-dark #view-findings .findings-regime-table tbody th{background:#132334;color:var(--text)}
+body.theme-dark #view-findings .findings-regime-table tbody th{background:#132334;color:var(--ink)}
 body.theme-dark #view-findings .findings-conclusion{background:#163632;border-color:#245e55}
 body.theme-dark #view-findings .findings-conclusion h2{color:#dcf6f0}
 body.theme-dark #view-findings .findings-conclusion p{color:#b8d8d2}
