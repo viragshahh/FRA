@@ -245,3 +245,42 @@ body.theme-dark .regime-table th,body.theme-dark .regime-table td{border-color:v
 body.theme-dark .regime-observation>b{color:var(--ink)}
 @media(max-width:1100px){.regime-cards-grid{grid-template-columns:1fr}.regime-table th,.regime-table td{font-size:11px}.regime-table th:first-child{width:50%}}
 @media(max-width:760px){.regime-chart-compact,.regime-cross-findings{grid-template-columns:1fr}.regime-card{padding:12px}}
+
+
+/* VaR backtesting: compact three-column result and interpretation layout */
+#view-backtest .backtest-method-card{padding:16px 20px;margin-bottom:14px}
+#view-backtest .backtest-method-card h2{margin:4px 0 8px}
+#view-backtest .backtest-method-card p{margin:6px 0;line-height:1.5}
+.backtest-period-intro{margin:12px 0 10px;padding:12px 16px}
+.backtest-period-comparison{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}
+.backtest-period-panel{min-width:0}
+.backtest-period-panel-head{padding:12px 13px 10px}
+.backtest-period-panel-head h3{font-size:15px}
+.backtest-period-table-wrap{padding:0 8px;overflow:visible;min-width:0}
+.backtest-period-table-wrap table{width:100%;min-width:0;table-layout:fixed;font-size:10px;white-space:normal}
+.backtest-period-table-wrap th{font-size:8px;padding:7px 4px;overflow-wrap:anywhere}
+.backtest-period-table-wrap td{font-size:9px;padding:8px 4px;vertical-align:top;overflow-wrap:anywhere}
+.backtest-period-table-wrap th:nth-child(1){width:27%}
+.backtest-period-table-wrap th:nth-child(2){width:17%}
+.backtest-period-table-wrap th:nth-child(3){width:29%}
+.backtest-period-table-wrap th:nth-child(4){width:27%}
+.backtest-period-table-wrap .backtest-decision{display:block;width:max-content;max-width:100%;white-space:normal;margin-top:3px;font-size:8px;padding:3px 4px}
+.backtest-panel-interpretation{padding:10px 11px 12px;border-top:1px solid var(--line);margin-top:auto}
+.backtest-panel-interpretation>.eyebrow{font-size:9px;margin-bottom:8px}
+.backtest-pvalue-interpretation{padding:8px 0;border-bottom:1px solid var(--line)}
+.backtest-pvalue-interpretation:last-child{border-bottom:0;padding-bottom:0}
+.backtest-pvalue-title{font-size:11px;font-weight:800;margin-bottom:5px}
+.pvalue-line{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:5px;padding:3px 0;font-size:10px}
+.pvalue-line em{font-style:normal;font-size:9px;font-weight:750;text-align:right}
+.pvalue-reject{color:#b5473c}
+.pvalue-pass{color:#16806b}
+.backtest-pvalue-interpretation p{font-size:10px;line-height:1.45;color:var(--muted);margin:6px 0 0}
+body.theme-dark .backtest-panel-interpretation{border-color:var(--line)}
+@media(max-width:900px){
+ .backtest-period-comparison{grid-template-columns:1fr}
+ .backtest-period-table-wrap{overflow:visible}
+}
+@media(max-width:600px){
+ .backtest-period-table-wrap table{min-width:0}
+ .backtest-period-intro{padding:12px}
+}
