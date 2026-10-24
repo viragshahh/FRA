@@ -181,9 +181,9 @@ function updateFinalFindings(){
  if($('#finding-optimization')){
   const checks=['High Risk','Low Risk'].flatMap(p=>['2020','2023','18M'].map(k=>{const x=D.optimization[p]?.[k],b=Number(selectedRegime(p,k).annualizedVolatility);return x&&Number.isFinite(b)?{p,k,base:b,opt:Number(x.volatility),named:(x.stocks||[]).filter(s=>s.stock!=='Stock').length}:null;}).filter(Boolean));
   const reductions=checks.filter(z=>z.opt<=z.base).length;
-  $('#finding-optimization').textContent='Across '+checks.length+' saved portfolio-window outputs, estimated volatility is lower than or equal to the equal-weight baseline in '+reductions+' cases. The optimization redistributes weights under a return target and covariance-based variance objective; the result remains conditional on the sample inputs and constraints.';
+  $('#finding-optimization').textContent='Across '+checks.length+' saved portfolio-window outputs, estimated volatility is lower than or equal to the reference portfolio in '+reductions+' cases. The optimizer redistributes weights under a return floor and covariance-based variance objective; the result remains conditional on the sample inputs and constraints.';
  }
- if($('#finding-limits')) $('#finding-limits').textContent='The 2023 and latest 18-month optimization outputs contain only nine named holdings per portfolio, despite a ten-stock design. Historical portfolio selection also uses broad-period information, so time-travel comparisons may contain look-ahead bias. These limit claims about complete allocations and historical investability.';
+ if($('#finding-limits')) $('#finding-limits').textContent='Mean-variance optimization is sensitive to estimated returns and covariances. Historical portfolio selection also uses broad-period information, so time-travel comparisons may contain look-ahead bias. These limits mean the results should be interpreted as sample-based comparisons, not proof of future performance.';
 }
 function download(filename,text,type='application/json'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
 $('#download-data').addEventListener('click',()=>download('fra_project_data.json',JSON.stringify(D,null,2)));
