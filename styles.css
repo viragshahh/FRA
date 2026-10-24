@@ -48,3 +48,5 @@ body.theme-dark .backtest-overall-conclusion p{color:#e9d8b1}
 #view-regimes .regime-finding-takeaway{background:#f2f8f7;border-left:3px solid #269b8d;padding:12px 14px;border-radius:0 8px 8px 0;line-height:1.75}
 #view-regimes .cross-finding-line p{line-height:1.75}
 body.theme-dark #view-regimes .regime-finding-takeaway{background:#173433;color:#d0e7e3}
+
+.backtest-period-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:var(--card)}.backtest-period-filter label{font-weight:650}.backtest-period-filter select{min-width:220px;max-width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}.backtest-period-filter .table-note{flex-basis:100%;margin:0}
