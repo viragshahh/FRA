@@ -397,3 +397,31 @@ body.theme-dark #view-optimization .matrix-wrap th:first-child{background:#13233
  #view-optimization .chart-bar-row{grid-template-columns:58px minmax(30px,1fr) 50px;gap:6px}
  #view-optimization .matrix-wrap{max-height:420px}
 }
+
+
+/* Markowitz side-by-side portfolio/regime comparison */
+#view-optimization .opt-method-card,#view-optimization .opt-portfolio-block{max-width:1200px;margin:0 0 18px}
+#view-optimization .opt-method-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+#view-optimization .opt-method-grid>div{padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+#view-optimization .opt-method-grid p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+#view-optimization .opt-portfolio-block{padding:22px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+#view-optimization .opt-portfolio-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+#view-optimization .opt-portfolio-heading h2{margin:4px 0 0}
+#view-optimization .opt-compare-wrap{overflow-x:auto;margin:0 0 20px}
+#view-optimization .opt-compare-table{min-width:650px}
+#view-optimization .opt-compare-table th,#view-optimization .opt-compare-table td{padding:12px 14px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#view-optimization .opt-compare-table thead th{background:#f2f6f8;font-size:11px;color:var(--muted)}
+#view-optimization .opt-compare-table th:first-child{text-align:left;position:sticky;left:0;background:var(--white);z-index:1}
+#view-optimization .opt-compare-table thead th:first-child{background:#f2f6f8}
+#view-optimization .opt-compare-table tbody tr:nth-child(even){background:rgba(120,140,160,.055)}
+#view-optimization .opt-subheading{margin:20px 0 10px}
+#view-optimization .opt-subheading h3{margin:0 0 5px}
+#view-optimization .opt-subheading p{margin:0;color:var(--muted);font-size:12px}
+#view-optimization .opt-regime-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#view-optimization .opt-regime-note{padding:13px;border:1px solid var(--line);border-radius:9px;background:var(--white)}
+#view-optimization .opt-regime-note p{font-size:12px;line-height:1.55;margin:7px 0}
+#view-optimization .opt-regime-note small{font-size:10px;color:var(--muted)}
+body.theme-dark #view-optimization .opt-method-grid>div,body.theme-dark #view-optimization .opt-portfolio-block,body.theme-dark #view-optimization .opt-regime-note{background:#132334}
+body.theme-dark #view-optimization .opt-compare-table thead th,body.theme-dark #view-optimization .opt-compare-table thead th:first-child{background:#1b3042}
+body.theme-dark #view-optimization .opt-compare-table th:first-child{background:#132334}
+@media(max-width:760px){#view-optimization .opt-method-grid,#view-optimization .opt-regime-notes{grid-template-columns:1fr}#view-optimization .opt-portfolio-block{padding:14px}#view-optimization .opt-compare-table th,#view-optimization .opt-compare-table td{padding:10px}}
