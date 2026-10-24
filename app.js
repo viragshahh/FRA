@@ -137,38 +137,33 @@ function renderBacktest(){
 function renderOptimization(){
  const regimes=['2020','2023','18M'];
  const portfolios=['High Risk','Low Risk'];
- const regimeShort={'2020':'Crisis 2020','2023':'Calm 2023','18M':'Last 18 Months'};
+ const regimeShort={'2020':'Crisis 2020','2023':'Calm 2023','18M':'Latest 18 Months'};
  const get=(p,r)=>D.optimization[p]?.[r]||{};
  const stocksFor=(p,r)=>(get(p,r).stocks||[]).filter(s=>s.stock!=='Stock');
  const portfolioPanel=p=>{
   const cases=regimes.map(r=>({r,x:get(p,r),stocks:stocksFor(p,r)}));
-  const metricRows=[
-   ['Optimized expected return',c=>fmtPct(c.x.optimizedReturn)],
-   ['Optimized volatility',c=>fmtPct(c.x.volatility)],
-   ['Portfolio variance',c=>fmtNum(c.x.variance,5)],
-   ['Minimum holding',c=>fmtPct(c.x.minWeight,2)],
-   ['Weight total',c=>fmtPct(c.x.weightSum,2)]
-  ];
-  const metrics=metricRows.map(([label,fn])=>'<tr><th scope="row">'+label+'</th>'+cases.map(c=>'<td>'+fn(c)+'</td>').join('')+'</tr>').join('');
+  const cards=cases.map(c=>'<article class="opt-regime-card"><div class="opt-regime-card-head"><span>'+regimeShort[c.r]+'</span><i></i></div><div class="opt-primary-metric"><span>Expected return</span><strong>'+fmtPct(c.x.optimizedReturn)+'</strong></div><div class="opt-secondary-metric"><span>Annualized volatility</span><b>'+fmtPct(c.x.volatility)+'</b></div><div class="opt-card-foot"><span>Holdings: '+c.stocks.length+'/10</span><span>Weight total: '+fmtPct(c.x.weightSum,1)+'</span></div></article>').join('');
   const names=[...new Set(cases.flatMap(c=>c.stocks.map(s=>s.stock)))];
   const allocation=names.map(name=>{
-   const row=cases.map(c=>{const s=c.stocks.find(v=>v.stock===name);return s?fmtPct(s.optimizedWeight,2):'—';});
-   return '<tr><th scope="row">'+esc(name)+'</th>'+row.map(v=>'<td>'+v+'</td>').join('')+'</tr>';
+   const cells=cases.map(c=>{
+    const s=c.stocks.find(v=>v.stock===name);
+    if(!s)return '<td><span class="opt-missing">Not available</span></td>';
+    const w=Math.max(0,Math.min(100,100*Number(s.optimizedWeight||0)));
+    return '<td><div class="opt-weight-cell"><div class="opt-weight-value">'+fmtPct(s.optimizedWeight,2)+'</div><div class="opt-weight-track"><div style="width:'+w+'%"></div></div></div></td>';
+   }).join('');
+   return '<tr><th scope="row">'+esc(name)+'</th>'+cells+'</tr>';
   }).join('');
   const warnings=cases.filter(c=>c.stocks.length!==10).map(c=>regimeShort[c.r]+': '+c.stocks.length+' named holdings').join('; ');
-  const interpretations=cases.map(c=>{
-   const x=c.x, base=selectedRegime(p,c.r), opt=Number(x.volatility), eq=Number(base.annualizedVolatility);
-   const delta=Number.isFinite(opt)&&Number.isFinite(eq)?(opt<=eq?'lower':'higher')+' volatility than the equal-weight baseline ('+fmtPct(eq)+' vs '+fmtPct(opt)+')':'volatility comparison unavailable';
-   return '<div class="opt-regime-note"><b>'+regimeShort[c.r]+'</b><p>Expected return '+fmtPct(x.optimizedReturn)+', with '+fmtPct(x.volatility)+' annualized volatility; '+delta+'.</p><small>Constraint check: '+esc(x.validation||'Not available')+'.</small></div>';
+  const notes=cases.map(c=>{
+   const vols=cases.map(k=>Number(k.x.volatility)),v=Number(c.x.volatility);
+   const note=v===Math.min(...vols)?'Lowest volatility within this portfolio.':v===Math.max(...vols)?'Highest volatility within this portfolio.':'Volatility sits between the other two regimes.';
+   return '<div class="opt-note"><b>'+regimeShort[c.r]+'</b><p>'+note+'</p></div>';
   }).join('');
-  return '<section class="opt-portfolio-block"><div class="opt-portfolio-heading"><div><div class="eyebrow">PORTFOLIO COMPARISON</div><h2>'+p+'</h2></div><span class="pill">10 holdings · 3 regimes</span></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table"><thead><tr><th>Measure</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+metrics+'</tbody></table></div><div class="opt-subheading"><h3>Optimized allocation by holding</h3><p>Each column shows the same portfolio optimized independently for that regime.</p></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table opt-allocation-table"><thead><tr><th>Company</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+allocation+'</tbody></table></div><div class="opt-regime-notes">'+interpretations+'</div>'+(warnings?'<p class="data-warning">Data completeness warning: '+warnings+'. Please reconcile the saved allocations with the original workbook.</p>':'')+'</section>';
+  return '<section class="opt-portfolio-block"><div class="opt-portfolio-heading"><div><div class="eyebrow">PORTFOLIO COMPARISON</div><h2>'+p+'</h2><p>Compare performance metrics across all three regimes.</p></div><span class="pill">Side-by-side view</span></div><div class="opt-regime-cards">'+cards+'</div><div class="opt-subheading"><div><h3>Optimized stock weights</h3><p>Each column is optimized independently using that regime’s return and covariance estimates.</p></div><span class="opt-table-key"><i></i> Portfolio weight</span></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table opt-allocation-table"><thead><tr><th>Company</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+allocation+'</tbody></table></div><div class="opt-regime-notes">'+notes+'</div>'+(warnings?'<p class="data-warning">Data completeness: '+warnings+'. The saved outputs do not identify all ten holdings in these cases; reconcile them with the original workbook before treating the allocation as complete.</p>':'')+'</section>';
  };
  $('#opt-comparison').innerHTML=portfolios.map(portfolioPanel).join('');
- const first=get('High Risk','2020');
- const cov=first.covariance||{};
- $('#covariance-table').innerHTML='<thead><tr><th>Company</th>'+(cov.labels||[]).slice(1).map(l=>'<th>'+esc(l)+'</th>').join('')+'</tr></thead><tbody>'+(cov.matrix||[]).map((row,i)=>'<tr><th>'+esc(cov.labels?.[i+1]||'Stock '+(i+1))+'</th>'+row.map(v=>'<td>'+fmtNum(v,4)+'</td>').join('')+'</tr>').join('')+'</tbody>';
- $('#opt-validation').textContent='Objective: minimize portfolio variance, subject to weights summing to 100%, a 1% minimum holding, and the saved expected-return floor.';
- if($('#opt-interpretation'))$('#opt-interpretation').textContent='Compare the three regimes within each portfolio first. Crisis, calm, and rolling-window results use regime-specific means and covariance matrices, so both expected returns and optimal weights can change materially.';
+ $('#opt-validation').textContent='Method: minimize portfolio variance, with weights summing to 100%, a 1% minimum weight per holding, and the saved expected-return floor.';
+ if($('#opt-interpretation'))$('#opt-interpretation').textContent='The regime-specific estimates can lead to different allocations. Higher expected return does not automatically mean lower risk or better future performance.';
  if($('#opt-data-warning'))$('#opt-data-warning').hidden=true;
  updateFinalFindings();
 }
