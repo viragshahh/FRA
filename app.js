@@ -100,7 +100,6 @@ function updateFinalFindings(){
 function download(filename,text,type='application/json'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
 $('#download-data').addEventListener('click',()=>download('fra_project_data.json',JSON.stringify(D,null,2)));
 $('#download-json').addEventListener('click',()=>download('fra_project_data.json',JSON.stringify(D,null,2)));
-$('#backtest-period-select')?.addEventListener('change',renderBacktest);
 renderUniverse();renderSelection('High Risk');renderRegime();renderBacktest();renderOptimization();renderTravel();updateFinalFindings();
 if(location.hash&&titles[location.hash.slice(1)])nav(location.hash.slice(1));
 })();
