@@ -86,7 +86,7 @@ function renderRegime(){
  $('#regime-cross-findings').innerHTML=
   '<article class="regime-cross-finding"><b>Volatility depends on the window</b><p>Volatility peaks in '+periodNames[highestHigh]+' for High Risk and '+periodNames[highestLow]+' for Low Risk. Risk estimates are sensitive to the dates observed.</p></article>'+
   '<article class="regime-cross-finding"><b>Return and risk can diverge</b><p>In the latest window, High Risk averaged '+fmtPct(highRecent)+' while Low Risk averaged '+fmtPct(lowRecent)+'. Lower measured risk is not the same as avoiding losses.</p></article>'+
-  '<article class="regime-cross-finding"><b>Tail losses still matter</b><p>Compare historical ES 99% across both portfolios: it captures the average loss in the worst tail, adding context beyond average return and volatility.</p></article>';
+  '<article class="regime-cross-finding"><b>Tail losses still matter</b><p>Historical ES 99% is '+fmtPct(Math.abs(val('High Risk','18M','historicalES99')))+' for High Risk versus '+fmtPct(Math.abs(val('Low Risk','18M','historicalES99')))+' for Low Risk in the latest window. This shows the average loss in the worst 1% tail, beyond what mean return and volatility alone reveal.</p></article>';
 }
 function renderBacktest(){
  const portfolios=['High Risk','Low Risk'];
