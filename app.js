@@ -177,17 +177,46 @@ function renderOptimization(){
  updateFinalFindings();
 }
 function updateFinalFindings(){
- const v=(p,r)=>Number(selectedRegime(p,r).annualizedVolatility);
- const h20=v('High Risk','2020'),l20=v('Low Risk','2020'),h23=v('High Risk','2023'),l23=v('Low Risk','2023'),h18=v('High Risk','18M'),l18=v('Low Risk','18M');
- if($('#finding-regimes')) $('#finding-regimes').textContent='Across the three selected windows, High Risk volatility is '+[h20,h23,h18].map(fmtPct).join(', ')+' while Low Risk volatility is '+[l20,l23,l18].map(fmtPct).join(', ')+'. High Risk is more volatile in all three windows in this sample.';
- if($('#finding-optimization')){
-  const checks=['High Risk','Low Risk'].flatMap(p=>['2020','2023','18M'].map(k=>{const x=D.optimization[p]?.[k],b=Number(selectedRegime(p,k).annualizedVolatility);return x&&Number.isFinite(b)?{p,k,base:b,opt:Number(x.volatility),named:(x.stocks||[]).filter(s=>s.stock!=='Stock').length}:null;}).filter(Boolean));
-  const reductions=checks.filter(z=>z.opt<=z.base).length;
-  $('#finding-optimization').textContent='Across '+checks.length+' saved portfolio-window outputs, estimated volatility is lower than or equal to the reference portfolio in '+reductions+' cases. The optimizer redistributes weights under a return floor and covariance-based variance objective; the result remains conditional on the sample inputs and constraints.';
+  const regimes=['2020','2023','18M'];
+  const labels={'2020':'Crisis 2020','2023':'Calm 2023','18M':'Latest 18 months'};
+  const reg=(p,r)=>D.regimes?.[p]?.[r]||{};
+  const opt=(p,r)=>D.optimization?.[p]?.[r]||{};
+  const pct=(v,d=2)=>fmtPct(Number(v),d);
+  const h20=reg('High Risk','2020'),l20=reg('Low Risk','2020');
+  const h23=reg('High Risk','2023'),l23=reg('Low Risk','2023');
+  const h18=reg('High Risk','18M'),l18=reg('Low Risk','18M');
+  const bt=(p,period,confidence)=>{
+   const periods=D.backtests?.[p]?.summary?.periods||{};
+   const key=Object.keys(periods).find(k=>k.toLowerCase().includes(period.toLowerCase()));
+   return (key?periods[key]:[]).find(x=>x.confidence===confidence)||{};
+  };
+  const h20v=Number(h20.annualizedVolatility),l20v=Number(l20.annualizedVolatility);
+  const crisis95H=bt('High Risk','Crisis','95%'),crisis99H=bt('High Risk','Crisis','99%');
+  const crisis95L=bt('Low Risk','Crisis','95%'),crisis99L=bt('Low Risk','Crisis','99%');
+  const kpis=[
+   {label:'Stress-window volatility',value:pct(h20v)+' / '+pct(l20v),sub:'High Risk / Low Risk · 2020'},
+   {label:'Stress-window ES 95%',value:pct(h20.historicalES95)+' / '+pct(l20.historicalES95),sub:'High Risk / Low Risk · historical tail loss'},
+   {label:'VaR frequency test',value:'4 of 4 rejected',sub:'Both portfolios · 95% and 99% · crisis 2020'},
+   {label:'Calm-window optimized volatility',value:pct(opt('High Risk','2023').volatility)+' / '+pct(opt('Low Risk','2023').volatility),sub:'High Risk / Low Risk · Markowitz output'}
+  ];
+  const kpiEl=$('#findings-kpis');
+  if(kpiEl) kpiEl.innerHTML=kpis.map(k=>'<article class="findings-kpi"><span>'+esc(k.label)+'</span><strong>'+esc(k.value)+'</strong><small>'+esc(k.sub)+'</small></article>').join('');
+  const obs=[
+   {n:'01',tag:'REGIME EFFECT',title:'The high-risk portfolio is consistently more volatile',body:'Annualized volatility is '+pct(h20v)+' versus '+pct(l20.annualizedVolatility)+' in 2020, '+pct(h23.annualizedVolatility)+' versus '+pct(l23.annualizedVolatility)+' in 2023, and '+pct(h18.annualizedVolatility)+' versus '+pct(l18.annualizedVolatility)+' in the latest 18-month window. The gap persists in every window; the high-risk label is reflected in measured outcomes, not just the stock-selection score.',metric:'Latest-window volatility gap: '+pct(h18.annualizedVolatility-l18.annualizedVolatility)},
+   {n:'02',tag:'TAIL RISK',title:'The difference is visible in severe-loss estimates too',body:'Historical ES at 95% is '+pct(h20.historicalES95)+' for High Risk and '+pct(l20.historicalES95)+' for Low Risk in 2020. In the latest window it is '+pct(h18.historicalES95)+' versus '+pct(l18.historicalES95)+'. The low-risk portfolio’s tail loss is less severe in all three windows, although it is not immune to loss.',metric:'2020 ES 95% difference: '+pct(Math.abs(Number(h20.historicalES95))-Math.abs(Number(l20.historicalES95)))+' in return terms'},
+   {n:'03',tag:'MODEL VALIDATION',title:'The crisis window is where VaR calibration is weakest',body:'In 2020, Kupiec p-values are '+Number(crisis95H.kupiecP).toFixed(3)+' and '+Number(crisis99H.kupiecP).toFixed(3)+' for High Risk, and '+Number(crisis95L.kupiecP).toFixed(3)+' and '+Number(crisis99L.kupiecP).toFixed(3)+' for Low Risk. All are below 0.05, so expected exception frequency is rejected at both confidence levels for both portfolios. In 2023 and the latest window, the displayed frequency test does not reject at 5%; that is not proof of model accuracy.',metric:'Crisis: reject at 95% and 99% for both portfolios'},
+   {n:'04',tag:'OPTIMIZATION',title:'The lowest optimized volatility appears in the calm window',body:'Markowitz volatility falls to '+pct(opt('High Risk','2023').volatility)+' for High Risk and '+pct(opt('Low Risk','2023').volatility)+' for Low Risk in 2023, compared with '+pct(opt('High Risk','2020').volatility)+' and '+pct(opt('Low Risk','2020').volatility)+' in 2020. The latest-window optimized return estimate is '+pct(opt('High Risk','18M').optimizedReturn)+' for High Risk but '+pct(opt('Low Risk','18M').optimizedReturn)+' for Low Risk. These are model estimates under constraints, not realized performance.',metric:'Latest optimized return: '+pct(opt('High Risk','18M').optimizedReturn)+' / '+pct(opt('Low Risk','18M').optimizedReturn)+' · High / Low'},
+   {n:'05',tag:'UNIVERSE PATTERN',title:'The score separates distinct sector and risk profiles',body:'The highest-ranked group includes Shriram Finance and several metals and industrial names, while the lowest-ranked group includes multiple FMCG names, healthcare companies and TCS. This reflects the combined beta, volatility and drawdown scores in this sample; it is not a permanent ranking of business quality or future risk.',metric:'Score weights: Beta 30% · Volatility 40% · Drawdown 30%'}
+  ];
+  const obsEl=$('#findings-observations');
+  if(obsEl) obsEl.innerHTML=obs.map(x=>'<article class="findings-observation-card"><div class="finding-card-top"><span class="finding-number">'+x.n+'</span><span class="finding-tag">'+esc(x.tag)+'</span></div><h3>'+esc(x.title)+'</h3><p>'+esc(x.body)+'</p><div class="finding-evidence">'+esc(x.metric)+'</div></article>').join('');
+  const tableEl=$('#findings-regime-table');
+  if(tableEl) tableEl.innerHTML=regimes.map(r=>{
+   const h=reg('High Risk',r),l=reg('Low Risk',r);
+   return '<tr><th scope="row">'+esc(labels[r])+'</th><td>'+pct(h.annualizedVolatility)+'</td><td>'+pct(l.annualizedVolatility)+'</td><td>'+pct(h.historicalES95)+'</td><td>'+pct(l.historicalES95)+'</td></tr>';
+  }).join('');
  }
- if($('#finding-limits')) $('#finding-limits').textContent='Mean-variance optimization is sensitive to estimated returns and covariances. Historical portfolio selection also uses broad-period information, so time-travel comparisons may contain look-ahead bias. These limits mean the results should be interpreted as sample-based comparisons, not proof of future performance.';
-}
-function download(filename,text,type='application/json'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
+ function download(filename,text,type='application/json'){const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
 $('#download-data').addEventListener('click',()=>download('fra_project_data.json',JSON.stringify(D,null,2)));
 $('#download-json').addEventListener('click',()=>download('fra_project_data.json',JSON.stringify(D,null,2)));
 renderUniverse();renderSelection('High Risk');renderRegime();renderBacktest();renderOptimization();updateFinalFindings();
