@@ -253,3 +253,29 @@ body.theme-dark #view-data .data-rationale-grid>div{border-color:var(--line)}
 #view-regimes .regime-selection-figure>.table-note{margin:12px 0 0;line-height:1.6}
 @media(max-width:1050px){#view-regimes #regime-selection-chart{grid-template-columns:1fr}}
 @media(max-width:760px){#view-regimes .regime-selection-figure{padding:13px}#view-regimes #regime-selection-chart .chart-bar-row{grid-template-columns:62px minmax(20px,1fr) 45px}}
+
+/* VaR backtesting: compare both portfolios in one view */
+.backtest-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0 0 16px}
+.backtest-summary-card{min-width:0;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.backtest-summary-card>span{display:block;color:var(--muted);font-size:11px;font-weight:700}
+.backtest-summary-card strong{display:block;font:750 21px var(--display);letter-spacing:-.03em;margin:5px 0 8px}
+.backtest-summary-card small{display:block;color:var(--muted);font-size:11px;line-height:1.6}
+.backtest-chart-panel{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+.backtest-portfolio-chart{min-width:0;padding:16px;border:1px solid var(--line);border-radius:11px;background:#fbfcfd}
+.backtest-portfolio-chart>.chart-group-title{font:750 14px var(--display);margin-bottom:12px}
+.backtest-confidence-group{padding:12px 0;border-top:1px solid var(--line)}
+.backtest-confidence-label{display:block;font-size:11px;margin-bottom:8px}
+.backtest-chart-panel .chart-bar-row{grid-template-columns:58px minmax(20px,1fr) 53px}
+.backtest-decision{display:inline-flex;padding:4px 8px;border-radius:6px;font-size:10px;font-weight:800}
+.backtest-decision.reject{color:#9b3d3d;background:#fdeaea}
+.backtest-decision.pass{color:#176b5e;background:#e1f5ef}
+.backtest-findings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}
+.backtest-finding{min-width:0;border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfcfd}
+.backtest-finding h3{font:750 14px var(--display);margin:0 0 10px}
+.backtest-finding p{font-size:12px;color:var(--muted);line-height:1.65;margin:9px 0}
+.backtest-table-wrap table{min-width:900px}
+body.theme-dark .backtest-summary-card,body.theme-dark .backtest-portfolio-chart,body.theme-dark .backtest-finding{background:#132334;border-color:var(--line)}
+body.theme-dark .backtest-decision.reject{background:#4a292d;color:#ffc4c4}
+body.theme-dark .backtest-decision.pass{background:#173c38;color:#a7f0df}
+@media(max-width:900px){.backtest-chart-panel,.backtest-findings-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.backtest-summary-grid{grid-template-columns:1fr}.backtest-summary-card{padding:15px}.backtest-portfolio-chart{padding:12px}}
