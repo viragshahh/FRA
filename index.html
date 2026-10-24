@@ -69,9 +69,9 @@
     <h2>How we build the composite risk score</h2>
     <p class="risk-intro">We combine three complementary measures to rank the 45 selected stocks by relative risk.</p>
     <div class="risk-metric-grid">
-      <div class="risk-metric"><div class="risk-metric-top"><b>Beta</b><strong>30%</strong></div><p>Market sensitivity: how strongly a stock tends to move with the Nifty 50.</p></div>
-      <div class="risk-metric"><div class="risk-metric-top"><b>Annualized volatility</b><strong>40%</strong></div><p>Overall return variability. It receives the highest weight because it captures broad fluctuations across market conditions.</p></div>
-      <div class="risk-metric"><div class="risk-metric-top"><b>Maximum drawdown</b><strong>30%</strong></div><p>The largest peak-to-trough fall, adding a direct measure of downside experience.</p></div>
+      <div class="risk-metric"><div class="risk-metric-top"><b>Beta (30%)</b></div><p>Market sensitivity: how strongly a stock tends to move with the Nifty 50.</p></div>
+      <div class="risk-metric"><div class="risk-metric-top"><b>Annualized volatility (40%)</b></div><p>Overall return variability. It receives the highest weight because it captures broad fluctuations across market conditions.</p></div>
+      <div class="risk-metric"><div class="risk-metric-top"><b>Maximum drawdown (30%)</b></div><p>The largest peak-to-trough fall, adding a direct measure of downside experience.</p></div>
     </div>
     <div class="risk-method-subhead">Correlation check and ES exclusion</div>
     <p class="risk-copy">We compared the candidate metrics across all 45 stocks before finalizing the score. ES 99% correlated very strongly with annualized volatility (<b>r = 0.9557</b>). Including both could double-count similar risk information, so ES is excluded from this composite score—but remains useful for tail-loss analysis elsewhere in the project.</p>
