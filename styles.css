@@ -235,3 +235,21 @@ body.theme-dark #view-regimes .cross-finding-line{background:#1b2d40}
 body.theme-dark #view-data .data-rationale-grid>div{border-color:var(--line)}
 @media(max-width:900px){#view-data .info-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#view-data .info-card{padding:16px}}
 @media(max-width:760px){#view-data .content-card{padding:17px}#view-data .info-grid{grid-template-columns:1fr}#view-data .info-card{min-height:0}#view-data .info-card p{margin-top:0;padding-top:4px}#view-data .data-rationale-grid{grid-template-columns:1fr;gap:0}#view-data .data-universe-card .card-heading{align-items:stretch;flex-direction:column}#view-data .data-universe-card .search-input{width:100%;flex-basis:auto}#view-data .data-universe-table-wrap table{min-width:610px}}
+
+
+/* Regime selection figure and concise regime descriptions */
+#view-regimes .regime-selection-intro{max-width:850px;margin:0 0 16px;color:var(--muted);font-size:12px;line-height:1.7}
+#view-regimes .regime-selection-figure{margin:16px 0 22px;padding:18px}
+#view-regimes #regime-selection-chart{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
+#view-regimes #regime-selection-chart .chart-group{min-width:0;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface-soft,#f7f9fc)}
+#view-regimes #regime-selection-chart .chart-group-title{font-size:12px;font-weight:750;line-height:1.45;margin-bottom:12px}
+#view-regimes #regime-selection-chart .chart-bar-row{grid-template-columns:70px minmax(20px,1fr) 49px;gap:7px;font-size:10px}
+#view-regimes #regime-selection-chart .chart-track{height:8px}
+#view-regimes .regime-explanation-eyebrow{margin:5px 0 0}
+#view-regimes .regime-definition-grid{margin:12px 0 0;gap:12px}
+#view-regimes .regime-definition-card{padding:15px;gap:6px}
+#view-regimes .regime-definition-card>b{font-size:13px}
+#view-regimes .regime-definition-card p{font-size:11px;line-height:1.6}
+#view-regimes .regime-selection-figure>.table-note{margin:12px 0 0;line-height:1.6}
+@media(max-width:1050px){#view-regimes #regime-selection-chart{grid-template-columns:1fr}}
+@media(max-width:760px){#view-regimes .regime-selection-figure{padding:13px}#view-regimes #regime-selection-chart .chart-bar-row{grid-template-columns:62px minmax(20px,1fr) 45px}}
