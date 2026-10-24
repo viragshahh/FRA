@@ -51,7 +51,7 @@
     <article class="feature-card"><span class="feature-icon">↗</span><div class="eyebrow">INTERPRETATION</div><h3>Compare market regimes</h3><p>Our findings show how measured risk changes with the observation window.</p><button class="text-btn" data-go="regimes">Compare regimes ↗</button></article>
   </div>
   <div class="insight-card"><div class="eyebrow accent">RESEARCH NARRATIVE</div><h2>From source data to evidence-backed conclusions</h2><p>We move from data quality and stock selection to risk measurement, backtesting and optimization. Each section presents our method, the result from the study and what that result allows us to conclude.</p><button class="primary-btn" data-go="data">Begin with the data <span>→</span></button></div>
-  <div class="section-foot"><span>01 / 08</span><button class="next-btn" data-go="data">Next: Data and Universe →</button></div>
+  <div class="section-foot"><span>01 / 07</span><button class="next-btn" data-go="data">Next: Data and Universe →</button></div>
 </section>
 <section class="view" id="view-data">
   <div class="page-intro"><div class="eyebrow">02 • INPUTS AND COVERAGE</div><h1>Data and stock universe</h1><p>The quality of a risk estimate depends on the integrity of the price history used to calculate returns.</p></div>
@@ -60,7 +60,7 @@
   <div class="content-card data-preparation-card"><div class="card-heading"><div><div class="eyebrow">DATA PREPARATION</div><h2>Consistent inputs for portfolio analysis</h2></div></div><div class="check-list"><div><span class="check">01</span><div><b>Adjusted price history</b><p>Adjusted closing prices provide the basis for measuring changes in investment value over time.</p></div></div><div><span class="check">02</span><div><b>Daily return calculation</b><p>Daily returns are derived from consecutive adjusted closing prices and used throughout the analysis.</p></div></div><div><span class="check">03</span><div><b>Date alignment and coverage</b><p>Consistent observation windows support meaningful comparison across companies and portfolios.</p></div></div><div><span class="check">04</span><div><b>Portfolio analytics</b><p>Returns feed into risk scoring, covariance, Value at Risk, Expected Shortfall, backtesting and portfolio optimization.</p></div></div></div></div>
   <div class="content-card data-universe-card"><div class="card-heading"><div><div class="eyebrow">STOCK UNIVERSE</div><h2>Search the 45 companies</h2></div><input id="universe-search" class="search-input" type="search" placeholder="Search company name"></div><div class="table-wrap data-universe-table-wrap"><table><thead><tr><th>Company</th><th>Beta</th><th>Annualized volatility</th><th>Maximum drawdown</th><th>Risk rank</th></tr></thead><tbody id="universe-table"></tbody></table></div><p class="table-note">Rankings are based on the composite risk scoring method described in this study.</p></div>
   <div class="content-card data-findings-card"><div class="eyebrow">FINDING FROM THE SCREENING</div><h2>What the risk ranking tells us</h2><p id="universe-interpretation" class="interpretation">The ranking identifies relative risk profiles within our selected 45-stock research universe.</p></div>
-  <div class="section-foot"><span>02 / 08</span><button class="next-btn" data-go="selection">Next: Risk Scoring →</button></div>
+  <div class="section-foot"><span>02 / 07</span><button class="next-btn" data-go="selection">Next: Risk Scoring →</button></div>
 </section>
 <section class="view" id="view-selection">
   <div class="page-intro"><div class="eyebrow">03 • PORTFOLIO CONSTRUCTION</div><h1>Risk scoring and stock selection</h1><p>The study compares two ten stock portfolios formed from a composite score that combines market sensitivity, volatility and drawdown.</p></div>
@@ -87,7 +87,7 @@
     </div>
   </div>
   <div class="content-card"><div class="card-heading"><div><div class="eyebrow">PORTFOLIO COMPOSITION</div><h2>Compare the selected holdings</h2></div><div class="toggle-group" id="selection-toggle"><button class="selected" data-portfolio="High Risk">High Risk</button><button data-portfolio="Low Risk">Low Risk</button></div></div><div id="selection-summary" class="selection-summary"></div><p id="selection-interpretation" class="interpretation">The composite score separates the selected high-risk and low-risk groups within this universe.</p><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Company</th><th>Industry</th><th>Risk score</th><th>Starting weight</th><th>Capital allocation</th></tr></thead><tbody id="holdings-table"></tbody></table></div></div>
-  <div class="section-foot"><span>03 / 08</span><button class="next-btn" data-go="regimes">Next: Market Regimes →</button></div>
+  <div class="section-foot"><span>03 / 07</span><button class="next-btn" data-go="regimes">Next: Market Regimes →</button></div>
 </section>
 <section class="view" id="view-regimes">
   <div class="page-intro"><div class="eyebrow">04 • COMPARATIVE ANALYSIS</div><h1>Portfolio and market regimes</h1><p>We compare the same portfolios across a stress period, a calmer period and a recent rolling window. Volatility helps explain why these windows were selected; the regime cards and comparison below show what the results mean.</p></div>
@@ -98,7 +98,7 @@
   </div>
   <div class="regime-cards-grid" id="regime-key-findings"></div>
   <div class="content-card regime-cross-card"><div class="eyebrow">CROSS-REGIME COMPARISON</div><h2>What changes across market conditions?</h2><p id="regime-interpretation" class="interpretation"></p><div id="regime-cross-findings" class="regime-cross-findings"></div></div>
-  <div class="section-foot"><span>04 / 08</span><button class="next-btn" data-go="backtest">Next: VaR Backtesting →</button></div>
+  <div class="section-foot"><span>04 / 07</span><button class="next-btn" data-go="backtest">Next: VaR Backtesting →</button></div>
 </section>
 <section class="view" id="view-backtest">
 <div class="page-intro"><div class="eyebrow">05 • MODEL CHECK</div><h1>VaR backtesting</h1><p>Compare the High Risk and Low Risk portfolios using the Kupiec p-value only.</p></div>
@@ -106,7 +106,7 @@
 <div class="backtest-period-intro"><div><div class="eyebrow">SIDE-BY-SIDE COMPARISON</div><h2>VaR backtesting across three periods</h2></div></div>
 <div id="backtest-period-comparison" class="backtest-period-comparison"></div>
 
-<div class="section-foot"><span>05 / 08</span><button class="next-btn" data-go="optimization">Next: Markowitz Optimization →</button></div>
+<div class="section-foot"><span>05 / 07</span><button class="next-btn" data-go="optimization">Next: Markowitz Optimization →</button></div>
 </section>
 <section class="view" id="view-optimization">
   <div class="page-intro"><div class="eyebrow">06 • MEAN VARIANCE FRAMEWORK</div><h1>Markowitz optimization</h1><p>Compare optimized High Risk and Low Risk portfolios across the crisis, calm, and latest 18-month regimes — all in one view, with no filters.</p></div>
