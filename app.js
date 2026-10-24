@@ -58,13 +58,13 @@ function renderRegime(){
   const hv=Number(h.annualizedVolatility), lv=Number(l.annualizedVolatility);
   let observationTitle, takeaway;
   if(r==='2020'){
-   observationTitle='Unusual observation · crisis window still shows positive average returns';
+   observationTitle='Positive average returns during the crisis window';
    takeaway='Despite the crisis label, annualized mean returns are '+fmtPct(hm)+' for High Risk and '+fmtPct(lm)+' for Low Risk. A period label does not mean every day—or the full-window average—was negative; volatility is the clearer stress signal.';
   }else if(r==='2023'){
-   observationTitle='Unusual observation · the higher-risk portfolio also earned more';
+   observationTitle='Higher average return came with higher volatility';
    takeaway='High Risk returned '+fmtPct(hm)+' versus '+fmtPct(lm)+' for Low Risk, but volatility was also higher ('+fmtPct(hv)+' versus '+fmtPct(lv)+'). In this sample, the lower-risk portfolio came with a lower average return; that is a historical result, not a guaranteed rule.';
   }else{
-   observationTitle='Unusual observation · Low Risk still lost on average';
+   observationTitle='Negative average return despite lower volatility';
    takeaway='Low Risk recorded an annualized mean return of '+fmtPct(lm)+' despite volatility of '+fmtPct(lv)+'. High Risk returned '+fmtPct(hm)+' with volatility of '+fmtPct(hv)+'. Lower volatility reduced variability, but did not prevent a negative average return.';
   }
   const label=r==='2020'?'STRESS PERIOD':r==='2023'?'CALMER PERIOD':'RECENT WINDOW';
