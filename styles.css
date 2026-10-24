@@ -205,3 +205,43 @@ body.theme-dark .regime-selection-figure .chart-group-title{color:#e7eef5}
 body.theme-dark .regime-observation{background:#173c38;border-color:#285b54}
 body.theme-dark .regime-observation>b{color:#c3eee7}
 body.theme-dark .regime-observation p{color:#b8d7d1}
+
+/* Final compact Market Regimes layout */
+#view-regimes .page-intro p{max-width:780px}
+.regime-volatility-card{margin:14px 0 18px}
+.regime-volatility-card .card-heading{margin-bottom:8px}
+.regime-selection-intro{font-size:12px;line-height:1.55;color:var(--muted);margin:0 0 10px}
+.regime-chart-compact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.regime-chart-compact .chart-group{min-width:0}
+.regime-chart-compact .chart-group-title{font-size:11px;font-weight:750;margin-bottom:7px}
+.regime-chart-compact .chart-bar-row{display:grid;grid-template-columns:62px minmax(0,1fr) 48px;gap:6px;align-items:center;margin:7px 0;font-size:9px}
+.regime-chart-compact .chart-bar-row>b{text-align:right;font-size:10px;font-variant-numeric:tabular-nums}
+.regime-chart-compact .chart-track{height:7px;border-radius:99px;background:#e9eef2;overflow:hidden}
+.regime-chart-compact .chart-fill{height:100%;border-radius:99px}
+.regime-chart-compact .chart-fill.high{background:#1a9a8b}.regime-chart-compact .chart-fill.low{background:#7a9bc4}
+.regime-cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start;margin:14px 0}
+.regime-card{min-width:0;padding:14px;background:var(--white);border:1px solid var(--line);border-radius:10px;box-shadow:none;display:flex;flex-direction:column}
+.regime-card-head{padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.regime-card-head h2{font:750 16px var(--display);margin:3px 0 0}
+.regime-table-wrap{min-width:0;overflow-x:auto}
+.regime-table{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums}
+.regime-table th,.regime-table td{padding:8px 4px;border-bottom:1px solid var(--line);text-align:right;font-size:10px;white-space:nowrap}
+.regime-table thead th{font-size:9px;color:var(--muted);font-weight:750}
+.regime-table th:first-child{text-align:left;width:42%;white-space:normal}
+.regime-table tbody th{font-weight:600;line-height:1.3}
+.regime-table tbody tr:last-child th,.regime-table tbody tr:last-child td{border-bottom:0}
+.regime-observation{margin-top:10px;padding:10px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent}
+.regime-observation>b{font-size:11px;line-height:1.45;color:var(--ink)}
+.regime-observation p{font-size:10px;line-height:1.55;color:var(--muted);margin:4px 0 0}
+.regime-cross-card{margin-top:14px}
+.regime-cross-card>h2{font-size:17px;margin:3px 0 10px}
+.regime-cross-card>.interpretation{display:none}
+.regime-cross-findings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.regime-cross-finding{padding:12px;background:var(--white);border:1px solid var(--line);border-radius:9px;min-width:0}
+.regime-cross-finding b{font-size:11px}
+.regime-cross-finding p{font-size:10px;line-height:1.5;color:var(--muted);margin:5px 0 0}
+body.theme-dark .regime-volatility-card,body.theme-dark .regime-card,body.theme-dark .regime-cross-finding{background:#132334;border-color:var(--line)}
+body.theme-dark .regime-table th,body.theme-dark .regime-table td{border-color:var(--line)}
+body.theme-dark .regime-observation>b{color:var(--ink)}
+@media(max-width:1100px){.regime-cards-grid{grid-template-columns:1fr}.regime-table th,.regime-table td{font-size:11px}.regime-table th:first-child{width:50%}}
+@media(max-width:760px){.regime-chart-compact,.regime-cross-findings{grid-template-columns:1fr}.regime-card{padding:12px}}
