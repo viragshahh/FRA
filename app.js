@@ -97,7 +97,7 @@ function renderBacktest(){
  const allRows=periods.flatMap(period=>portfolios.flatMap(p=>((D.backtests[p]?.periods||{})[period.key]||[]).map(x=>({...x,portfolio:p,period:period.key}))));
  const decision=x=>Number(x)<0.05?'<span class="backtest-decision reject">Reject</span>':'<span class="backtest-decision pass">Do not reject</span>';
  const pInterpretation=rows=>portfolios.map(portfolio=>{
-  const own=rows.filter(x=>x.portfolio===portfolio).sort((a,b)=>Number(b.confidence.replace('%',''))-Number(a.confidence.replace('%','')));
+  const own=rows.filter(x=>x.portfolio===portfolio).sort((a,b)=>Number(a.confidence.replace('%',''))-Number(b.confidence.replace('%','')));
   const levels=own.map(x=>{
    const p=Number(x.kupiecP);
    return '<span class="pvalue-line"><b>'+esc(x.confidence)+'</b><span>p = '+p.toFixed(3)+'</span><em class="'+(p<0.05?'pvalue-reject':'pvalue-pass')+'">'+(p<0.05?'Reject':'Do not reject')+'</em></span>';
