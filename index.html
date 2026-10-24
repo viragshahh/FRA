@@ -91,7 +91,19 @@
   <div class="section-foot"><span>03 / 08</span><button class="next-btn" data-go="regimes">Next: Market Regimes →</button></div>
 </section>
 <section class="view" id="view-regimes">
-  <div class="page-intro"><div class="eyebrow">04 • COMPARATIVE ANALYSIS</div><h1>Portfolio and market regimes</h1><p>Compare the same High Risk and Low Risk portfolios across the 2020 crisis, the calmer 2023 period and the latest 18-month window. The cards highlight each regime; the short comparison below explains what stands out across them.</p></div>
+  <div class="page-intro"><div class="eyebrow">04 • COMPARATIVE ANALYSIS</div><h1>Portfolio and market regimes</h1><p>We compare the same portfolios across a stress period, a calmer period and a recent rolling window. Volatility helps explain why these windows were selected; the regime cards and comparison below show what the results mean.</p></div>
+  <div class="content-card regime-context-card">
+    <div class="eyebrow">WHY THESE MARKET REGIMES?</div><h2>Regime selection based on volatility</h2>
+    <p class="regime-selection-intro">Annualized volatility compares how widely daily portfolio returns varied in each window. The 2020 crisis is the stress reference, 2023 is the calmer comparison, and the latest 18 months show recent conditions.</p>
+    <div class="regime-visual-card regime-selection-figure"><div class="chart-heading"><b>Annualized volatility by regime</b><span class="chart-legend"><i class="legend-high"></i> High Risk <i class="legend-low"></i> Low Risk</span></div><div id="regime-selection-chart" class="chart-panel" role="img" aria-label="Annualized volatility for High Risk and Low Risk portfolios across the three market regimes"></div></div>
+    <div class="eyebrow regime-explanation-eyebrow">THE THREE WINDOWS</div>
+    <div class="regime-explanations">
+      <div class="regime-explanation"><b>2020 · Crisis</b><p>Stress window capturing the COVID-19 market shock and highest observed volatility.</p></div>
+      <div class="regime-explanation"><b>2023 · Calm comparison</b><p>Lower-volatility window used as a contrast to the crisis period.</p></div>
+      <div class="regime-explanation"><b>Latest 18 months · Recent</b><p>Rolling window used to check whether the risk-return pattern persists in recent data.</p></div>
+    </div>
+  </div>
+  <div class="eyebrow regime-key-findings-heading">KEY FINDINGS FROM THE COMPARISON</div>
   <div class="regime-cards-grid" id="regime-key-findings"></div>
   <div class="content-card regime-cross-card"><div class="eyebrow">CROSS-REGIME COMPARISON</div><h2>What changes across market conditions?</h2><p id="regime-interpretation" class="interpretation"></p><div id="regime-cross-findings" class="regime-cross-findings"></div></div>
   <div class="content-card regime-measures-card"><div class="eyebrow">READING THE RESULTS</div><h2>What the measures mean</h2><div class="definition-grid regime-measures-grid"><div class="regime-measure"><b>Expected return</b><p>The arithmetic average daily return scaled by 252 trading days.</p></div><div class="regime-measure"><b>Annualized volatility</b><p>Daily standard deviation scaled by the square root of 252.</p></div><div class="regime-measure"><b>Value at Risk</b><p>A loss threshold at a selected confidence level under a chosen model.</p></div><div class="regime-measure"><b>Expected Shortfall</b><p>The average loss beyond a tail threshold, under the stated convention.</p></div></div></div>
