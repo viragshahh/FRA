@@ -155,9 +155,15 @@ function renderOptimization(){
   }).join('');
   const warnings=cases.filter(c=>c.stocks.length!==10).map(c=>regimeShort[c.r]+': '+c.stocks.length+' named holdings').join('; ');
   const notes=cases.map(c=>{
-   const vols=cases.map(k=>Number(k.x.volatility)),v=Number(c.x.volatility);
-   const note=v===Math.min(...vols)?'Lowest volatility within this portfolio.':v===Math.max(...vols)?'Highest volatility within this portfolio.':'Volatility sits between the other two regimes.';
-   return '<div class="opt-note"><b>'+regimeShort[c.r]+'</b><p>'+note+'</p></div>';
+   const ret=Number(c.x.optimizedReturn),vol=Number(c.x.volatility),target=Number(c.x.target);
+   const vols=cases.map(k=>Number(k.x.volatility));
+   const volRank=vol===Math.min(...vols)?'the lowest estimated volatility of the three windows':vol===Math.max(...vols)?'the highest estimated volatility of the three windows':'an estimated volatility between the other two windows';
+   const ranked=[...c.stocks].sort((a,b)=>Number(b.optimizedWeight||0)-Number(a.optimizedWeight||0));
+   const top=ranked.slice(0,2).map(s=>esc(s.stock)+' ('+fmtPct(s.optimizedWeight,1)+')').join(' and ');
+   const topShare=ranked.slice(0,3).reduce((sum,s)=>sum+Number(s.optimizedWeight||0),0);
+   const returnMeaning=Number.isFinite(ret)&&Number.isFinite(target)?(ret>=target?'The estimated return clears the fixed return floor of '+fmtPct(target)+'.':'The estimated return is below the fixed return floor of '+fmtPct(target)+', so check the saved optimization output and constraints.'):'';
+   const note='The optimizer estimates '+fmtPct(ret)+' annualized return with '+fmtPct(vol)+' annualized volatility. This is '+volRank+'. '+returnMeaning+' The largest allocations are '+(top||'not available')+'; the three largest positions together represent '+fmtPct(topShare,1)+' of the portfolio, indicating how concentrated the allocation is. These are model estimates from the selected historical window, not forecasts or guaranteed outcomes.';
+   return '<div class="opt-note"><b>'+regimeShort[c.r]+' · What it means</b><p>'+note+'</p></div>';
   }).join('');
   return '<section class="opt-portfolio-block"><div class="opt-portfolio-heading"><div><div class="eyebrow">PORTFOLIO COMPARISON</div><h2>'+p+'</h2><p>Compare performance metrics across all three regimes.</p></div><span class="pill">Side-by-side view</span></div><div class="opt-regime-cards">'+cards+'</div><div class="opt-subheading"><div><h3>Optimized stock weights</h3><p>Each column is optimized independently using that regime’s return and covariance estimates.</p></div><span class="opt-table-key"><i></i> Portfolio weight</span></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table opt-allocation-table"><thead><tr><th>Company</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+allocation+'</tbody></table></div><div class="opt-regime-notes">'+notes+'</div>'+(warnings?'<p class="data-warning">Data completeness: '+warnings+'. The saved outputs do not identify all ten holdings in these cases; reconcile them with the original workbook before treating the allocation as complete.</p>':'')+'</section>';
  };
