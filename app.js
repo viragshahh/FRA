@@ -4,8 +4,8 @@ const D=window.FRA_DATA;
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
 if(!D){document.body.innerHTML='<p>Project data could not be loaded.</p>';return;}
-const titles={overview:'Executive Summary',data:'Data and Universe',selection:'Risk Scoring',regimes:'Market Regimes',backtest:'VaR Backtesting',optimization:'Markowitz Optimization','time-travel':'Time Travel Analysis',findings:'Findings and Limits'};
-const views=['overview','data','selection','regimes','backtest','optimization','time-travel','findings'];
+const titles={overview:'Executive Summary',data:'Data and Universe',selection:'Risk Scoring',regimes:'Market Regimes',backtest:'VaR Backtesting',optimization:'Markowitz Optimization',findings:'Findings and Limits'};
+const views=['overview','data','selection','regimes','backtest','optimization','findings'];
 let presentationMode=false;
 const regimeLabel={2020:'Stress period 2020',2023:'Calmer period 2023','18M':'Rolling 18 month TTM'};
 let activePortfolio='High Risk';
