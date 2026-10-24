@@ -54,16 +54,25 @@ function renderRegime(){
  ];
  const cards=order.map(r=>{
   const h=selectedRegime('High Risk',r), l=selectedRegime('Low Risk',r);
-  let takeaway;
-  if(r==='2020') takeaway='Both portfolios show positive full-period average returns despite the crisis label. Volatility is the key stress signal in this window.';
-  else if(r==='2023') takeaway='High Risk has higher average return and higher volatility than Low Risk, showing the return–risk trade-off in this sample.';
-  else takeaway='Low Risk has a negative average return despite lower volatility. Lower variability does not guarantee positive returns.';
+  const hm=Number(h.annualizedMean), lm=Number(l.annualizedMean);
+  const hv=Number(h.annualizedVolatility), lv=Number(l.annualizedVolatility);
+  let observationTitle, takeaway;
+  if(r==='2020'){
+   observationTitle='Unusual observation · crisis window still shows positive average returns';
+   takeaway='Despite the crisis label, annualized mean returns are '+fmtPct(hm)+' for High Risk and '+fmtPct(lm)+' for Low Risk. A period label does not mean every day—or the full-window average—was negative; volatility is the clearer stress signal.';
+  }else if(r==='2023'){
+   observationTitle='Unusual observation · the higher-risk portfolio also earned more';
+   takeaway='High Risk returned '+fmtPct(hm)+' versus '+fmtPct(lm)+' for Low Risk, but volatility was also higher ('+fmtPct(hv)+' versus '+fmtPct(lv)+'). In this sample, the lower-risk portfolio came with a lower average return; that is a historical result, not a guaranteed rule.';
+  }else{
+   observationTitle='Unusual observation · Low Risk still lost on average';
+   takeaway='Low Risk recorded an annualized mean return of '+fmtPct(lm)+' despite volatility of '+fmtPct(lv)+'. High Risk returned '+fmtPct(hm)+' with volatility of '+fmtPct(hv)+'. Lower volatility reduced variability, but did not prevent a negative average return.';
+  }
   const label=r==='2020'?'STRESS PERIOD':r==='2023'?'CALMER PERIOD':'RECENT WINDOW';
   const metricCards=metricDefs.map(([name,key,loss])=>{
    const hv=Number(h[key]), lv=Number(l[key]);
    return '<div class="regime-metric"><span>'+name+'</span><div><small>High Risk</small><b>'+fmtPct(loss?Math.abs(hv):hv)+'</b></div><div><small>Low Risk</small><b>'+fmtPct(loss?Math.abs(lv):lv)+'</b></div></div>';
   }).join('');
-  return '<article class="regime-card"><div class="regime-card-head"><div class="eyebrow">'+label+'</div><h2>'+periodNames[r]+'</h2></div><div class="regime-metric-grid">'+metricCards+'</div><p class="regime-card-takeaway">'+takeaway+'</p></article>';
+  return '<article class="regime-card"><div class="regime-card-head"><div class="eyebrow">'+label+'</div><h2>'+periodNames[r]+'</h2></div><div class="regime-metric-grid">'+metricCards+'</div><div class="regime-observation"><b>'+observationTitle+'</b><p>'+takeaway+'</p></div></article>';
  }).join('');
  const val=(p,r,key)=>Number(selectedRegime(p,r)[key]);
  const highRecent=val('High Risk','18M','annualizedMean');
@@ -73,11 +82,11 @@ function renderRegime(){
  const highestHigh=order[highVols.indexOf(Math.max(...highVols))];
  const highestLow=order[lowVols.indexOf(Math.max(...lowVols))];
  $('#regime-key-findings').innerHTML=cards;
- $('#regime-interpretation').textContent='Lower volatility is not the same as guaranteed positive returns. Read average returns alongside volatility and tail-loss measures.';
+ $('#regime-interpretation').textContent='The counterintuitive results matter more than the labels: lower volatility did not ensure positive returns, and a crisis label did not produce a negative full-window average. Historical outcomes should be read with volatility and tail-loss exposure together.';
  $('#regime-cross-findings').innerHTML=
-  '<article class="regime-cross-finding"><b>Stress window</b><p>Volatility peaks in '+periodNames[highestHigh]+' for High Risk and '+periodNames[highestLow]+' for Low Risk.</p></article>'+
-  '<article class="regime-cross-finding"><b>Latest-window return gap</b><p>High Risk mean return is '+fmtPct(highRecent)+' versus '+fmtPct(lowRecent)+' for Low Risk.</p></article>'+
-  '<article class="regime-cross-finding"><b>Risk is not return</b><p>Low Risk volatility is '+fmtPct(val('Low Risk','18M','annualizedVolatility'))+', while its latest-window mean is '+fmtPct(lowRecent)+'.</p></article>';
+  '<article class="regime-cross-finding"><b>Volatility depends on the window</b><p>Volatility peaks in '+periodNames[highestHigh]+' for High Risk and '+periodNames[highestLow]+' for Low Risk. Risk estimates are sensitive to the dates observed.</p></article>'+
+  '<article class="regime-cross-finding"><b>Return and risk can diverge</b><p>In the latest window, High Risk averaged '+fmtPct(highRecent)+' while Low Risk averaged '+fmtPct(lowRecent)+'. Lower measured risk is not the same as avoiding losses.</p></article>'+
+  '<article class="regime-cross-finding"><b>Tail losses still matter</b><p>Compare historical ES 99% across both portfolios: it captures the average loss in the worst tail, adding context beyond average return and volatility.</p></article>';
 }
 function renderBacktest(){
  const portfolios=['High Risk','Low Risk'];
