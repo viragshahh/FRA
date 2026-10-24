@@ -34,3 +34,33 @@ body.theme-dark .page-intro p,body.theme-dark .content-card>p{color:var(--muted)
 .presentation-mode .presentation-status{top:76px}
 body.theme-dark .presentation-status{background:#173433;border-color:#2a5b54;color:#c6e2dd}
 @media(max-width:760px){.presentation-status{top:62px;padding:8px 12px;gap:5px}.presentation-status .next-btn{font-size:10px;padding:5px}}
+
+/* Risk-scoring methodology: calmer spacing and clear visual hierarchy */
+.risk-method-card{padding:28px;overflow:hidden}
+.risk-method-card>h2{margin:5px 0 6px}
+.risk-intro{margin:0 0 20px;max-width:760px}
+.risk-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 26px}
+.risk-metric{padding:17px 18px;background:#f7f9fb;border:1px solid #e6ebf0;border-radius:11px;min-width:0}
+.risk-metric-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.risk-metric-top b{font-size:12px}
+.risk-metric-top strong{font:800 23px var(--display);color:#087f72;white-space:nowrap}
+.risk-metric p{font-size:11px;color:var(--muted);line-height:1.65;margin:9px 0 0}
+.risk-method-subhead{font:700 14px var(--display);margin:23px 0 8px}
+.risk-copy{line-height:1.75;margin:8px 0 16px}
+.risk-matrix-wrap{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0 22px}
+.risk-matrix-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 15px;background:#f7f9fb;border-bottom:1px solid var(--line)}
+.risk-matrix-heading b{font-size:11px}
+.risk-matrix-heading span{font-size:10px;color:var(--muted)}
+.risk-matrix{white-space:normal;table-layout:auto}
+.risk-matrix th,.risk-matrix td{padding:12px 14px;line-height:1.45}
+.risk-matrix th:first-child{min-width:145px}
+.risk-matrix td{text-align:center;font-variant-numeric:tabular-nums}
+.risk-matrix .corr-high{min-width:78px;text-align:center}
+.risk-formula-box{padding:18px 20px;background:#f7f9fb;border:1px solid #e6ebf0;border-radius:11px;margin-top:22px}
+.risk-formula-box .risk-method-subhead{margin-top:0}
+.risk-equation{padding:13px 15px;background:#eaf6f3;border:1px solid #d6ebe6;border-radius:8px;color:#176f66;font:700 15px var(--display);line-height:1.6;margin:12px 0}
+.risk-formula-box .risk-copy{margin-bottom:0}
+body.theme-dark .risk-metric,body.theme-dark .risk-matrix-heading,body.theme-dark .risk-formula-box{background:#1b2d40;border-color:var(--line)}
+body.theme-dark .risk-equation{background:#173433;border-color:#2a5b54;color:#c6e2dd}
+@media(max-width:900px){.risk-metric-grid{grid-template-columns:1fr}.risk-metric{padding:15px}.risk-matrix-wrap{overflow:hidden}.risk-matrix{min-width:660px}.risk-matrix-wrap .table-wrap{overflow-x:auto}}
+@media(max-width:760px){.risk-method-card{padding:18px}.risk-matrix-heading{align-items:flex-start;flex-direction:column;gap:3px}.risk-formula-box{padding:15px}.risk-equation{font-size:13px}}
