@@ -113,10 +113,22 @@ function renderBacktest(){
  const decision=x=>Number(x)<0.05?'<span class="backtest-decision reject">Reject</span>':'<span class="backtest-decision pass">Do not reject</span>';
  const interpretation=rows=>{
   const rejected=rows.filter(x=>Number(x.kupiecP)<0.05);
-  if(rejected.length===rows.length) return 'All p-values are below 0.05, so expected exception frequency is rejected for both portfolios at 95% and 99% VaR.';
-  if(rejected.length===0) return 'All p-values are at least 0.05, so expected exception frequency is not rejected for either portfolio at 95% or 99% VaR.';
-  const labels=[...new Set(rejected.map(x=>x.portfolio+' at '+x.confidence))];
-  return 'The p-value rejects expected exception frequency for '+labels.join(', ')+'. Other portfolio/confidence results are not rejected at the 5% level.';
+  const above=rows.filter(x=>Number(x.observedRate)>Number(x.expectedRate));
+  const below=rows.filter(x=>Number(x.observedRate)<Number(x.expectedRate));
+  if(rejected.length){
+   if(rejected.length===rows.length && rejected.every(x=>Number(x.observedRate)>Number(x.expectedRate))){
+    return 'Both portfolios breach their VaR limits more often than the confidence levels predict, and the p-values show this gap is statistically significant. In this stress window, the VaR estimates understate downside risk and provide insufficient loss protection.';
+   }
+   const labels=[...new Set(rejected.map(x=>x.portfolio+' at '+x.confidence))];
+   return 'The observed exception frequency is statistically inconsistent with the VaR target for '+labels.join(', ')+'. This signals a calibration problem at those levels; review whether the model captures the period’s tail risk adequately.';
+  }
+  if(above.length===rows.length){
+   return 'Exception rates are slightly above their targets, but none of the p-values is below 0.05. The test therefore finds insufficient evidence that VaR is systematically underestimating risk in this window; this is not proof that the model is accurate.';
+  }
+  if(below.length===rows.length){
+   return 'Fewer exceptions occurred than the VaR targets imply, but the differences are not statistically significant. The model may be conservative in this window, yet the test does not establish that conclusively.';
+  }
+  return 'None of the p-values is below 0.05, so the test does not find a statistically significant mismatch in exception frequency. The observed rates differ from their targets, but this test alone cannot prove that VaR is accurate or that losses are independent.';
  };
  $('#backtest-period-comparison').innerHTML=periods.map(period=>{
   const rows=allRows.filter(x=>x.period===period.key);
