@@ -64,3 +64,43 @@ body.theme-dark .risk-metric,body.theme-dark .risk-matrix-heading,body.theme-dar
 body.theme-dark .risk-equation{background:#173433;border-color:#2a5b54;color:#c6e2dd}
 @media(max-width:900px){.risk-metric-grid{grid-template-columns:1fr}.risk-metric{padding:15px}.risk-matrix-wrap{overflow:hidden}.risk-matrix{min-width:660px}.risk-matrix-wrap .table-wrap{overflow-x:auto}}
 @media(max-width:760px){.risk-method-card{padding:18px}.risk-matrix-heading{align-items:flex-start;flex-direction:column;gap:3px}.risk-formula-box{padding:15px}.risk-equation{font-size:13px}}
+
+
+/* Risk scoring section: consistent cards, labels and correlation table */
+.risk-method-card{display:flex;flex-direction:column;gap:22px;padding:clamp(20px,3vw,32px);border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 10px 30px rgba(16,28,44,.045)}
+.risk-method-card>h2{margin:-12px 0 -8px;max-width:760px;letter-spacing:-.025em;line-height:1.2}
+.risk-method-card .risk-intro{margin:0;max-width:760px;color:var(--muted);line-height:1.7}
+.risk-metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0}
+.risk-metric{min-width:0;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface-soft,#f7f9fc);box-shadow:0 3px 10px rgba(16,28,44,.025)}
+.risk-metric-top{display:flex;align-items:flex-start;min-height:42px}
+.risk-metric-top b{font-size:15px;line-height:1.45;letter-spacing:-.01em}
+.risk-metric p{margin:10px 0 0;color:var(--muted);font-size:13px;line-height:1.7}
+.risk-method-subhead{font-size:15px;font-weight:750;letter-spacing:-.01em;margin:0 0 8px}
+.risk-copy{margin:0;color:var(--muted);font-size:14px;line-height:1.8}
+.risk-matrix-wrap{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.risk-matrix-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border-bottom:1px solid var(--line);background:var(--surface-soft,#f7f9fc)}
+.risk-matrix-heading b{font-size:14px}
+.risk-matrix-heading span{font-size:12px;color:var(--muted);white-space:nowrap}
+.risk-matrix-wrap .table-wrap{width:100%;overflow-x:auto}
+.risk-matrix{width:100%;min-width:720px;table-layout:fixed;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.risk-matrix th,.risk-matrix td{padding:14px 12px;text-align:center;vertical-align:middle;border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:normal;overflow-wrap:anywhere;font-size:13px}
+.risk-matrix thead th{height:64px;background:var(--surface-soft,#f7f9fc);font-size:12px;font-weight:750;line-height:1.4}
+.risk-matrix th:first-child{width:25%;text-align:left;padding-left:18px}
+.risk-matrix th:not(:first-child){width:18.75%}
+.risk-matrix tbody th{background:var(--surface-soft,#f7f9fc);font-weight:700;line-height:1.45}
+.risk-matrix tbody tr:last-child th,.risk-matrix tbody tr:last-child td{border-bottom:0}
+.risk-matrix th:last-child,.risk-matrix td:last-child{border-right:0}
+.risk-matrix td{font-weight:600;color:var(--text,#253348)}
+.risk-matrix td.corr-high{background:#e0f4e9!important;color:#126b45!important;font-weight:800;box-shadow:inset 0 0 0 2px #22a06b}
+.risk-formula-box{padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--surface-soft,#f7f9fc)}
+.risk-formula-box .risk-method-subhead{margin-bottom:8px}
+.risk-formula-box>p{line-height:1.7}
+.risk-equation{margin:14px 0;padding:15px 18px;border:1px solid #cfe6df;border-radius:10px;background:#edf7f3;color:#174f46;font-size:15px;font-weight:750;line-height:1.6;overflow-wrap:anywhere}
+.risk-formula-box .risk-copy{margin-top:12px}
+body.theme-dark .risk-method-card,body.theme-dark .risk-matrix-wrap{background:var(--surface)}
+body.theme-dark .risk-metric,body.theme-dark .risk-matrix-heading,body.theme-dark .risk-formula-box,body.theme-dark .risk-matrix thead th,body.theme-dark .risk-matrix tbody th{background:#1b2d40}
+body.theme-dark .risk-matrix td{color:var(--text,#e8edf4)}
+body.theme-dark .risk-matrix td.corr-high{background:#173f32!important;color:#b7f0d1!important;box-shadow:inset 0 0 0 2px #3ba879}
+body.theme-dark .risk-equation{background:#173433;border-color:#2a5b54;color:#c6e2dd}
+@media(max-width:900px){.risk-metric-grid{grid-template-columns:1fr}.risk-metric{padding:17px}.risk-matrix-wrap .table-wrap{overflow-x:auto}.risk-matrix{min-width:720px}}
+@media(max-width:600px){.risk-method-card{padding:18px;gap:18px}.risk-matrix-heading{align-items:flex-start;flex-direction:column;gap:5px}.risk-matrix-heading span{white-space:normal}.risk-formula-box{padding:15px}.risk-equation{font-size:13px;padding:12px}}
