@@ -104,3 +104,50 @@ body.theme-dark .risk-matrix td.corr-high{background:#173f32!important;color:#b7
 body.theme-dark .risk-equation{background:#173433;border-color:#2a5b54;color:#c6e2dd}
 @media(max-width:900px){.risk-metric-grid{grid-template-columns:1fr}.risk-metric{padding:17px}.risk-matrix-wrap .table-wrap{overflow-x:auto}.risk-matrix{min-width:720px}}
 @media(max-width:600px){.risk-method-card{padding:18px;gap:18px}.risk-matrix-heading{align-items:flex-start;flex-direction:column;gap:5px}.risk-matrix-heading span{white-space:normal}.risk-formula-box{padding:15px}.risk-equation{font-size:13px;padding:12px}}
+
+
+/* Market regime section: card-based hierarchy and consistent responsive spacing */
+#view-regimes .page-intro{max-width:900px;margin-bottom:24px}
+#view-regimes .content-card{margin-bottom:22px}
+#view-regimes .regime-context-card{padding:clamp(20px,3vw,30px)}
+#view-regimes .regime-context-card>h2,#view-regimes .regime-measures-card>h2{margin:7px 0 18px;letter-spacing:-.025em}
+#view-regimes .regime-definition-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 16px}
+#view-regimes .regime-definition-card{min-width:0;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface-soft,#f7f9fc);display:flex;flex-direction:column;align-items:flex-start;gap:9px}
+#view-regimes .regime-year{display:inline-flex;align-items:center;padding:5px 9px;border-radius:7px;background:#e7f4f1;color:#16786d;font-size:11px;font-weight:800;letter-spacing:.04em}
+#view-regimes .regime-definition-card>b{font-size:14px;line-height:1.45}
+#view-regimes .regime-definition-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.75}
+#view-regimes .regime-context-card>.table-note{margin:12px 0 0;padding:12px 14px;border-radius:10px;background:var(--surface-soft,#f7f9fc);line-height:1.6}
+#view-regimes .regime-comparison-card{padding:clamp(20px,3vw,30px)}
+#view-regimes .regime-comparison-card .card-heading{margin-bottom:12px}
+#view-regimes .regime-card-subtitle{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+#view-regimes .period-filters{display:flex;gap:9px;margin:18px 0 20px}
+#view-regimes .period-filters label{padding:10px 13px;border-radius:10px;font-size:12px}
+#view-regimes .regime-visual-card{padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+#view-regimes .regime-visual-card .chart-heading{margin:0 0 16px;font-size:13px}
+#view-regimes #regime-chart{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0}
+#view-regimes #regime-chart .chart-group{padding:14px;border-radius:11px;background:var(--surface-soft,#f7f9fc)}
+#view-regimes #regime-chart .chart-group-title{font-size:12px;line-height:1.45}
+#view-regimes #regime-chart .chart-bar-row{grid-template-columns:66px minmax(20px,1fr) 48px;gap:7px}
+#view-regimes .regime-results-card{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+#view-regimes .regime-results-card h3{font-size:15px;margin:7px 0 14px}
+#view-regimes #regime-comparison{width:100%;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+#view-regimes #regime-comparison table{width:100%;min-width:1000px;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+#view-regimes #regime-comparison th,#view-regimes #regime-comparison td{padding:12px 13px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line);font-size:12px}
+#view-regimes #regime-comparison th:first-child,#view-regimes #regime-comparison td:first-child{text-align:left}
+#view-regimes #regime-comparison thead th{font-size:11px;line-height:1.45;background:var(--surface-soft,#f7f9fc)}
+#view-regimes #regime-comparison tbody tr:last-child td{border-bottom:0}
+#view-regimes .regime-finding-card{margin-top:14px;padding:17px 18px;border:1px solid #d6ebe6;border-radius:13px;background:#f1f8f6}
+#view-regimes .regime-finding-card .eyebrow{color:#16786d}
+#view-regimes .regime-finding-card .interpretation{margin:8px 0 0;padding:0;border:0;background:transparent;color:#244b46;line-height:1.75}
+#view-regimes .regime-measures-card{padding:clamp(20px,3vw,30px)}
+#view-regimes .regime-measures-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#view-regimes .regime-measure{min-width:0;padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft,#f7f9fc)}
+#view-regimes .regime-measure b{display:block;font-size:13px;margin-bottom:8px;line-height:1.45}
+#view-regimes .regime-measure p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}
+body.theme-dark #view-regimes .regime-definition-card,body.theme-dark #view-regimes .regime-context-card>.table-note,body.theme-dark #view-regimes #regime-chart .chart-group,body.theme-dark #view-regimes .regime-measure{background:#1b2d40}
+body.theme-dark #view-regimes .regime-year{background:#173f3a;color:#b9e9df}
+body.theme-dark #view-regimes .regime-finding-card{background:#173433;border-color:#2a5b54}
+body.theme-dark #view-regimes .regime-finding-card .interpretation{color:#c6e2dd}
+body.theme-dark #view-regimes #regime-comparison thead th{background:#1b2d40}
+@media(max-width:1050px){#view-regimes .regime-definition-grid{grid-template-columns:1fr}#view-regimes .regime-measures-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#view-regimes #regime-chart{grid-template-columns:1fr}}
+@media(max-width:760px){#view-regimes .regime-context-card,#view-regimes .regime-comparison-card,#view-regimes .regime-measures-card{padding:17px}#view-regimes .regime-definition-card{padding:15px}#view-regimes .period-filters label{flex:1 1 145px;justify-content:flex-start}#view-regimes .regime-visual-card,#view-regimes .regime-results-card{padding:13px}#view-regimes .regime-measures-grid{grid-template-columns:1fr}#view-regimes #regime-chart .chart-bar-row{grid-template-columns:58px minmax(20px,1fr) 45px}}
