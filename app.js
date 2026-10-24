@@ -109,7 +109,7 @@ function renderBacktest(){
   {key:'Calm (2023)',title:'Calm Period',subtitle:'2023'}
  ];
  const allRows=periods.flatMap(period=>portfolios.flatMap(p=>((D.backtests[p]?.periods||{})[period.key]||[]).map(x=>({...x,portfolio:p,period:period.key}))));
- const decision=x=>Number(x)<0.05?'<span class="backtest-decision reject">Reject</span>':'<span class="backtest-decision pass">Do not reject</span>';
+ const decision=x=>Number(x.kupiecP)<0.05?'<span class="backtest-decision reject">Reject</span>':'<span class="backtest-decision pass">Do not reject</span>';
  const interpretation=rows=>{
   const rejected=rows.filter(x=>Number(x.kupiecP)<0.05);
   const above=rows.filter(x=>Number(x.observedRate)>Number(x.expectedRate));
