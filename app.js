@@ -31,6 +31,19 @@ const periodNames={'2020':'2020 crisis','2023':'2023 calm','18M':'Latest 18 mont
 function visiblePeriods(selector){return $$(selector+':checked').map(el=>el.value);}
 function renderRegime(){
  const order=['2020','2023','18M'];
+ const portfolios=['High Risk','Low Risk'];
+ const allVols=order.flatMap(r=>portfolios.map(p=>Number(selectedRegime(p,r).annualizedVolatility)||0));
+ const maxVol=Math.max(.01,...allVols);
+ const chart=$('#regime-selection-chart');
+ if(chart){
+  chart.innerHTML=order.map(r=>{
+   const rows=portfolios.map(p=>{
+    const v=Number(selectedRegime(p,r).annualizedVolatility)||0;
+    return '<div class="chart-bar-row"><span>'+p+'</span><div class="chart-track"><div class="chart-fill '+(p==='High Risk'?'high':'low')+'" style="width:'+Math.max(0,Math.min(100,100*v/maxVol))+'%"></div></div><b>'+fmtPct(v)+'</b></div>';
+   }).join('');
+   return '<div class="chart-group"><div class="chart-group-title">'+periodNames[r]+'</div>'+rows+'</div>';
+  }).join('');
+ }
  const metricDefs=[
   ['Annualized mean','annualizedMean',false],
   ['Annualized volatility','annualizedVolatility',false],
