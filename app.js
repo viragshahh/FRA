@@ -72,7 +72,7 @@ function renderRegime(){
   let title, takeaway;
   if(r==='2020'){
    title='Volatility signals stress more clearly than average return';
-   takeaway='Both portfolios show positive full-window average returns despite the crisis label. The window label does not mean every day—or the period average—was negative.';
+   takeaway='Both portfolios show positive full window average returns despite the crisis label. The window label does not mean every day or the period average was negative.';
   }else if(r==='2023'){
    title='Higher return came with higher volatility';
    takeaway='High Risk had a higher average return ('+fmtPct(hm)+' vs '+fmtPct(lm)+') and higher volatility ('+fmtPct(hv)+' vs '+fmtPct(lv)+') in this sample.';
@@ -98,13 +98,13 @@ function renderRegime(){
  $('#regime-interpretation').textContent='';
  $('#regime-cross-findings').innerHTML=
   '<article class="regime-cross-finding"><b>Volatility changes by window</b><p>Highest in '+periodNames[highestHigh]+' for High Risk and '+periodNames[highestLow]+' for Low Risk.</p></article>'+
-  '<article class="regime-cross-finding"><b>Return and risk can diverge</b><p>Latest-window mean: High Risk '+fmtPct(highRecent)+'; Low Risk '+fmtPct(lowRecent)+'.</p></article>'+
-  '<article class="regime-cross-finding"><b>Tail losses matter</b><p>Latest-window ES 99%: High Risk '+fmtPct(Math.abs(val('High Risk','18M','historicalES99')))+'; Low Risk '+fmtPct(Math.abs(val('Low Risk','18M','historicalES99')))+'.</p></article>';
+  '<article class="regime-cross-finding"><b>Return and risk can diverge</b><p>Latest window mean: High Risk '+fmtPct(highRecent)+'; Low Risk '+fmtPct(lowRecent)+'.</p></article>'+
+  '<article class="regime-cross-finding"><b>Tail losses matter</b><p>Latest window ES 99%: High Risk '+fmtPct(Math.abs(val('High Risk','18M','historicalES99')))+'; Low Risk '+fmtPct(Math.abs(val('Low Risk','18M','historicalES99')))+'.</p></article>';
 }
 function renderBacktest(){
  const portfolios=['High Risk','Low Risk'];
  const periods=[
-  {key:'Last 18 Months (Apr 2025–Oct 2026)',title:'Last 18 Months',subtitle:'Apr 2025 – Oct 2026'},
+  {key:'Last 18 Months (Apr 2025 to Oct 2026)',title:'Last 18 Months',subtitle:'Apr 2025 to Oct 2026'},
   {key:'Crisis (2020)',title:'Crisis Period',subtitle:'2020'},
   {key:'Calm (2023)',title:'Calm Period',subtitle:'2023'}
  ];
@@ -116,22 +116,22 @@ function renderBacktest(){
   const below=rows.filter(x=>Number(x.observedRate)<Number(x.expectedRate));
   if(rejected.length){
    if(rejected.length===rows.length && rejected.every(x=>Number(x.observedRate)>Number(x.expectedRate))){
-    return 'Both portfolios breach their VaR limits more often than the confidence levels predict, and the p-values show this gap is statistically significant. In this stress window, the VaR estimates understate downside risk and provide insufficient loss protection.';
+    return 'Both portfolios breach their VaR limits more often than the confidence levels predict, and the p values show this gap is statistically significant. In this stress window, the VaR estimates understate downside risk and provide insufficient loss protection.';
    }
    const labels=[...new Set(rejected.map(x=>x.portfolio+' at '+x.confidence))];
    return 'The observed exception frequency is statistically inconsistent with the VaR target for '+labels.join(', ')+'. This signals a calibration problem at those levels; review whether the model captures the period’s tail risk adequately.';
   }
   if(above.length===rows.length){
-   return 'Exception rates are slightly above their targets, but none of the p-values is below 0.05. The test therefore finds insufficient evidence that VaR is systematically underestimating risk in this window; this is not proof that the model is accurate.';
+   return 'Exception rates are slightly above their targets, but none of the p values is below 0.05. The test therefore finds insufficient evidence that VaR is systematically underestimating risk in this window; this is not proof that the model is accurate.';
   }
   if(below.length===rows.length){
    return 'Fewer exceptions occurred than the VaR targets imply, but the differences are not statistically significant. The model may be conservative in this window, yet the test does not establish that conclusively.';
   }
-  return 'None of the p-values is below 0.05, so the test does not find a statistically significant mismatch in exception frequency. The observed rates differ from their targets, but this test alone cannot prove that VaR is accurate or that losses are independent.';
+  return 'None of the p values is below 0.05, so the test does not find a statistically significant mismatch in exception frequency. The observed rates differ from their targets, but this test alone cannot prove that VaR is accurate or that losses are independent.';
  };
  $('#backtest-period-comparison').innerHTML=periods.map(period=>{
   const rows=allRows.filter(x=>x.period===period.key);
-  return '<article class="backtest-period-panel"><header class="backtest-period-panel-head"><div><h3>'+period.title+'</h3><p>'+period.subtitle+'</p></div></header><div class="table-wrap backtest-period-table-wrap"><table><thead><tr><th>Portfolio / Level</th><th>Exceptions</th><th>Observed / Target</th><th>p-value</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><b>'+esc(x.portfolio)+'</b><small class="rate-target">'+esc(x.confidence)+'</small></td><td>'+x.exceptions+' / '+x.observations+'</td><td><b>'+fmtPct(x.observedRate)+'</b><small class="rate-target">Target '+fmtPct(x.expectedRate)+'</small></td><td><b>'+Number(x.kupiecP).toFixed(3)+'</b>'+decision(x)+'</td></tr>').join('')+'</tbody></table></div><div class="backtest-panel-interpretation"><div class="eyebrow">INTERPRETATION · P-VALUE ONLY</div><p>'+interpretation(rows)+'</p></div></article>';
+  return '<article class="backtest-period-panel"><header class="backtest-period-panel-head"><div><h3>'+period.title+'</h3><p>'+period.subtitle+'</p></div></header><div class="table-wrap backtest-period-table-wrap"><table><thead><tr><th>Portfolio / Level</th><th>Exceptions</th><th>Observed / Target</th><th>p value</th></tr></thead><tbody>'+rows.map(x=>'<tr><td><b>'+esc(x.portfolio)+'</b><small class="rate-target">'+esc(x.confidence)+'</small></td><td>'+x.exceptions+' / '+x.observations+'</td><td><b>'+fmtPct(x.observedRate)+'</b><small class="rate-target">Target '+fmtPct(x.expectedRate)+'</small></td><td><b>'+Number(x.kupiecP).toFixed(3)+'</b>'+decision(x)+'</td></tr>').join('')+'</tbody></table></div><div class="backtest-panel-interpretation"><div class="eyebrow">INTERPRETATION · P VALUE ONLY</div><p>'+interpretation(rows)+'</p></div></article>';
  }).join('');
 }
 function renderOptimization(){
@@ -166,12 +166,12 @@ function renderOptimization(){
   const crisis=cases.find(c=>c.r==='2020'), calm=cases.find(c=>c.r==='2023'), latest=cases.find(c=>c.r==='18M');
   const volSentence='Volatility ranges from '+fmtPct(byVol[0].x.volatility)+' in '+regimeShort[byVol[0].r]+' to '+fmtPct(byVol[byVol.length-1].x.volatility)+' in '+regimeShort[byVol[byVol.length-1].r]+'. This shows that estimated portfolio risk changes materially across historical windows.';
   const returnSentence='The highest optimized return estimate is '+fmtPct(byReturn[0].x.optimizedReturn)+' in '+regimeShort[byReturn[0].r]+', while the lowest is '+fmtPct(byReturn[byReturn.length-1].x.optimizedReturn)+' in '+regimeShort[byReturn[byReturn.length-1].r]+'. Return should be assessed alongside volatility, not on its own.';
-  const allocationSentence='The largest allocation in each window is '+topByRegime.map(t=>regimeShort[t.r]+': '+esc(t.name)+' ('+fmtPct(t.weight,1)+')').join('; ')+'. The largest single-stock weight ranges from '+fmtPct(smallestTop.weight,1)+' to '+fmtPct(largestTop.weight,1)+', showing how the preferred mix and concentration shift with the regime estimates.';
-  const notes='<div class="opt-note"><b>What stands out across the three regimes</b><ul class="opt-insight-list"><li><strong>Risk pattern:</strong> '+volSentence+'</li><li><strong>Return trade-off:</strong> '+returnSentence+'</li><li><strong>Allocation pattern:</strong> '+allocationSentence+'</li></ul></div>';
+  const allocationSentence='The largest allocation in each window is '+topByRegime.map(t=>regimeShort[t.r]+': '+esc(t.name)+' ('+fmtPct(t.weight,1)+')').join('; ')+'. The largest single stock weight ranges from '+fmtPct(smallestTop.weight,1)+' to '+fmtPct(largestTop.weight,1)+', showing how the preferred mix and concentration shift with the regime estimates.';
+  const notes='<div class="opt-note"><b>What stands out across the three regimes</b><ul class="opt-insight-list"><li><strong>Risk pattern:</strong> '+volSentence+'</li><li><strong>Return trade off:</strong> '+returnSentence+'</li><li><strong>Allocation pattern:</strong> '+allocationSentence+'</li></ul></div>';
   return '<section class="opt-portfolio-block"><div class="opt-portfolio-heading"><div><div class="eyebrow">PORTFOLIO COMPARISON</div><h2>'+p+'</h2><p>Compare performance metrics across all three regimes.</p></div><span class="pill">Side-by-side view</span></div><div class="opt-regime-cards">'+cards+'</div><div class="opt-subheading"><div><h3>Optimized stock weights</h3><p>Each column is optimized independently using that regime’s return and covariance estimates.</p></div><span class="opt-table-key"><i></i> Portfolio weight</span></div><div class="table-wrap opt-compare-wrap"><table class="opt-compare-table opt-allocation-table"><thead><tr><th>Company</th>'+cases.map(c=>'<th>'+regimeShort[c.r]+'</th>').join('')+'</tr></thead><tbody>'+allocation+'</tbody></table></div><div class="opt-regime-notes">'+notes+'</div>'+(warnings?'<p class="data-warning">Data completeness: '+warnings+'. The saved outputs do not identify all ten holdings in these cases; reconcile them with the original workbook before treating the allocation as complete.</p>':'')+'</section>';
  };
  $('#opt-comparison').innerHTML=portfolios.map(portfolioPanel).join('');
- $('#opt-validation').textContent='Method: minimize portfolio variance, with weights summing to 100%, a 1% minimum weight per holding, and the saved expected-return floor.';
+ $('#opt-validation').textContent='Method: minimize portfolio variance, with weights summing to 100%, a 1% minimum weight per holding, and the saved expected return floor.';
  if($('#opt-interpretation'))$('#opt-interpretation').innerHTML='<ul class="opt-insight-list opt-global-insights"><li><strong>Crisis 2020:</strong> Both portfolios show their highest optimized return estimates and highest volatility in this window. The stronger return estimate comes with higher estimated risk; it is not evidence that crises are inherently profitable.</li><li><strong>Calm 2023:</strong> Both portfolios have their lowest estimated volatility. In this sample, this is the comparatively lower-risk window, but lower volatility does not by itself establish that a portfolio is better.</li><li><strong>Latest 18 months:</strong> The High Risk portfolio has a positive optimized return estimate, while the Low Risk portfolio estimate is negative. This highlights that portfolio labels do not guarantee positive returns in every period.</li></ul>';
  if($('#opt-data-warning'))$('#opt-data-warning').hidden=true;
  updateFinalFindings();
@@ -194,18 +194,18 @@ function updateFinalFindings(){
   const crisis95H=bt('High Risk','Crisis','95%'),crisis99H=bt('High Risk','Crisis','99%');
   const crisis95L=bt('Low Risk','Crisis','95%'),crisis99L=bt('Low Risk','Crisis','99%');
   const kpis=[
-   {label:'Stress-window volatility',value:pct(h20v)+' / '+pct(l20v),sub:'High Risk / Low Risk · 2020'},
-   {label:'Stress-window ES 95%',value:pct(h20.historicalES95)+' / '+pct(l20.historicalES95),sub:'High Risk / Low Risk · historical tail loss'},
+   {label:'Stress window volatility',value:pct(h20v)+' / '+pct(l20v),sub:'High Risk / Low Risk · 2020'},
+   {label:'Stress window ES 95%',value:pct(h20.historicalES95)+' / '+pct(l20.historicalES95),sub:'High Risk / Low Risk · historical tail loss'},
    {label:'VaR frequency test',value:'4 of 4 rejected',sub:'Both portfolios · 95% and 99% · crisis 2020'},
-   {label:'Calm-window optimized volatility',value:pct(opt('High Risk','2023').volatility)+' / '+pct(opt('Low Risk','2023').volatility),sub:'High Risk / Low Risk · Markowitz output'}
+   {label:'Calm window optimized volatility',value:pct(opt('High Risk','2023').volatility)+' / '+pct(opt('Low Risk','2023').volatility),sub:'High Risk / Low Risk · Markowitz output'}
   ];
   const kpiEl=$('#findings-kpis');
   if(kpiEl) kpiEl.innerHTML=kpis.map(k=>'<article class="findings-kpi"><span>'+esc(k.label)+'</span><strong>'+esc(k.value)+'</strong><small>'+esc(k.sub)+'</small></article>').join('');
   const obs=[
-   {n:'01',tag:'REGIME EFFECT',title:'The high-risk portfolio is consistently more volatile',body:'Annualized volatility is '+pct(h20v)+' versus '+pct(l20.annualizedVolatility)+' in 2020, '+pct(h23.annualizedVolatility)+' versus '+pct(l23.annualizedVolatility)+' in 2023, and '+pct(h18.annualizedVolatility)+' versus '+pct(l18.annualizedVolatility)+' in the latest 18-month window. The gap persists in every window; the high-risk label is reflected in measured outcomes, not just the stock-selection score.',metric:'Latest-window volatility gap: '+pct(h18.annualizedVolatility-l18.annualizedVolatility)},
-   {n:'02',tag:'TAIL RISK',title:'The difference is visible in severe-loss estimates too',body:'Historical ES at 95% is '+pct(h20.historicalES95)+' for High Risk and '+pct(l20.historicalES95)+' for Low Risk in 2020. In the latest window it is '+pct(h18.historicalES95)+' versus '+pct(l18.historicalES95)+'. The low-risk portfolio’s tail loss is less severe in all three windows, although it is not immune to loss.',metric:'2020 ES 95% difference: '+pct(Math.abs(Number(h20.historicalES95))-Math.abs(Number(l20.historicalES95)))+' in return terms'},
-   {n:'03',tag:'MODEL VALIDATION',title:'The crisis window is where VaR calibration is weakest',body:'In 2020, Kupiec p-values are '+Number(crisis95H.kupiecP).toFixed(3)+' and '+Number(crisis99H.kupiecP).toFixed(3)+' for High Risk, and '+Number(crisis95L.kupiecP).toFixed(3)+' and '+Number(crisis99L.kupiecP).toFixed(3)+' for Low Risk. All are below 0.05, so expected exception frequency is rejected at both confidence levels for both portfolios. In 2023 and the latest window, the displayed frequency test does not reject at 5%; that is not proof of model accuracy.',metric:'Crisis: reject at 95% and 99% for both portfolios'},
-   {n:'04',tag:'OPTIMIZATION',title:'The lowest optimized volatility appears in the calm window',body:'Markowitz volatility falls to '+pct(opt('High Risk','2023').volatility)+' for High Risk and '+pct(opt('Low Risk','2023').volatility)+' for Low Risk in 2023, compared with '+pct(opt('High Risk','2020').volatility)+' and '+pct(opt('Low Risk','2020').volatility)+' in 2020. The latest-window optimized return estimate is '+pct(opt('High Risk','18M').optimizedReturn)+' for High Risk but '+pct(opt('Low Risk','18M').optimizedReturn)+' for Low Risk. These are model estimates under constraints, not realized performance.',metric:'Latest optimized return: '+pct(opt('High Risk','18M').optimizedReturn)+' / '+pct(opt('Low Risk','18M').optimizedReturn)+' · High / Low'},
+   {n:'01',tag:'REGIME EFFECT',title:'The high risk portfolio is consistently more volatile',body:'Annualized volatility is '+pct(h20v)+' versus '+pct(l20.annualizedVolatility)+' in 2020, '+pct(h23.annualizedVolatility)+' versus '+pct(l23.annualizedVolatility)+' in 2023, and '+pct(h18.annualizedVolatility)+' versus '+pct(l18.annualizedVolatility)+' in the latest 18 month window. The gap persists in every window; the high risk label is reflected in measured outcomes, not just the stock selection score.',metric:'Latest window volatility gap: '+pct(h18.annualizedVolatility-l18.annualizedVolatility)},
+   {n:'02',tag:'TAIL RISK',title:'The difference is visible in severe-loss estimates too',body:'Historical ES at 95% is '+pct(h20.historicalES95)+' for High Risk and '+pct(l20.historicalES95)+' for Low Risk in 2020. In the latest window it is '+pct(h18.historicalES95)+' versus '+pct(l18.historicalES95)+'. The low risk portfolio’s tail loss is less severe in all three windows, although it is not immune to loss.',metric:'2020 ES 95% difference: '+pct(Math.abs(Number(h20.historicalES95))-Math.abs(Number(l20.historicalES95)))+' in return terms'},
+   {n:'03',tag:'MODEL VALIDATION',title:'The crisis window is where VaR calibration is weakest',body:'In 2020, Kupiec p values are '+Number(crisis95H.kupiecP).toFixed(3)+' and '+Number(crisis99H.kupiecP).toFixed(3)+' for High Risk, and '+Number(crisis95L.kupiecP).toFixed(3)+' and '+Number(crisis99L.kupiecP).toFixed(3)+' for Low Risk. All are below 0.05, so expected exception frequency is rejected at both confidence levels for both portfolios. In 2023 and the latest window, the displayed frequency test does not reject at 5%; that is not proof of model accuracy.',metric:'Crisis: reject at 95% and 99% for both portfolios'},
+   {n:'04',tag:'OPTIMIZATION',title:'The lowest optimized volatility appears in the calm window',body:'Markowitz volatility falls to '+pct(opt('High Risk','2023').volatility)+' for High Risk and '+pct(opt('Low Risk','2023').volatility)+' for Low Risk in 2023, compared with '+pct(opt('High Risk','2020').volatility)+' and '+pct(opt('Low Risk','2020').volatility)+' in 2020. The latest window optimized return estimate is '+pct(opt('High Risk','18M').optimizedReturn)+' for High Risk but '+pct(opt('Low Risk','18M').optimizedReturn)+' for Low Risk. These are model estimates under constraints, not realized performance.',metric:'Latest optimized return: '+pct(opt('High Risk','18M').optimizedReturn)+' / '+pct(opt('Low Risk','18M').optimizedReturn)+' · High / Low'},
    {n:'05',tag:'UNIVERSE PATTERN',title:'The score separates distinct sector and risk profiles',body:'The highest-ranked group includes Shriram Finance and several metals and industrial names, while the lowest-ranked group includes multiple FMCG names, healthcare companies and TCS. This reflects the combined beta, volatility and drawdown scores in this sample; it is not a permanent ranking of business quality or future risk.',metric:'Score weights: Beta 30% · Volatility 40% · Drawdown 30%'}
   ];
   const obsEl=$('#findings-observations');
