@@ -110,11 +110,10 @@
 <div class="section-foot"><span>05 / 08</span><button class="next-btn" data-go="optimization">Next: Markowitz Optimization →</button></div>
 </section>
 <section class="view" id="view-optimization">
-  <div class="page-intro"><div class="eyebrow">06 • MEAN VARIANCE FRAMEWORK</div><h1>Markowitz optimization</h1><p>Side-by-side comparison of optimized allocations for High Risk and Low Risk portfolios across the crisis, calm, and latest 18-month regimes.</p></div>
-  <div class="content-card opt-method-card"><div class="eyebrow">OPTIMIZATION METHOD</div><h2>One objective, three historical regimes</h2><div class="opt-method-grid"><div><b>Objective</b><p>Minimize portfolio variance using each regime's covariance matrix.</p></div><div><b>Constraints</b><p>Weights sum to 100%; each selected holding has at least 1% weight; expected return must meet the saved return floor.</p></div><div><b>How to compare</b><p>Read across each portfolio to compare regimes, then compare High Risk with Low Risk. These are historical model outputs, not forecasts.</p></div></div></div>
+  <div class="page-intro"><div class="eyebrow">06 • MEAN VARIANCE FRAMEWORK</div><h1>Markowitz optimization</h1><p>Compare optimized High Risk and Low Risk portfolios across the crisis, calm, and latest 18-month regimes — all in one view, with no filters.</p></div>
+  <div class="opt-method-strip"><span class="opt-method-dot"></span><div><b>Optimization objective</b><p>Minimize portfolio variance · 100% total allocation · 1% minimum holding · expected-return floor</p></div></div>
   <div id="opt-comparison" class="opt-comparison"></div>
-  <div class="content-card"><div class="eyebrow">COVARIANCE INPUTS</div><h2>Covariance matrix · High Risk · Crisis 2020</h2><p>Annualized covariance values are in decimal return units squared. Covariance captures how holdings moved together in the selected sample.</p><div class="table-wrap matrix-wrap"><table id="covariance-table"></table></div></div>
-  <div class="content-card"><div class="eyebrow">MODEL CHECK</div><h2>Optimization rules and interpretation</h2><p id="opt-validation" class="interpretation"></p><p id="opt-interpretation" class="interpretation"></p><p id="opt-data-warning" class="data-warning" hidden></p></div>
+  <div class="content-card opt-model-note"><div class="eyebrow">INTERPRETING THE RESULTS</div><p id="opt-validation" class="interpretation"></p><p id="opt-interpretation" class="interpretation"></p><p id="opt-data-warning" class="data-warning" hidden></p></div>
   <div class="section-foot"><span>06 / 08</span><button class="next-btn" data-go="time-travel">Next: Time Travel Analysis →</button></div>
 </section>
 <section class="view" id="view-time-travel">
