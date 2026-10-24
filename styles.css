@@ -109,3 +109,30 @@ body.theme-dark .backtest-panel-takeaway p{color:#b8d7d1}
   overflow-x: auto;
   overflow-y: visible;
 }
+
+
+/* Agreed Market Regimes layout: three regime cards, followed by concise cross-regime findings. */
+.regime-cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch;margin:16px 0}
+.regime-card{min-width:0;background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.regime-card-head{padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.regime-card-head .eyebrow{font-size:9px}
+.regime-card-head h2{font:750 17px var(--display);margin:4px 0 0}
+.regime-metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.regime-metric{min-width:0;padding:10px;border:1px solid var(--line);border-radius:8px;background:#f8fafb}
+.regime-metric>span{display:block;font-size:10px;font-weight:750;line-height:1.35;min-height:27px}
+.regime-metric>div{display:flex;justify-content:space-between;align-items:baseline;gap:5px;margin-top:5px}
+.regime-metric small{font-size:9px;color:var(--muted)}
+.regime-metric b{font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.regime-card-takeaway{font-size:11px;line-height:1.6;color:var(--muted);padding:11px 12px;margin:12px 0 0;border-left:3px solid var(--teal);background:#f0f8f6;border-radius:0 7px 7px 0}
+.regime-cross-card{margin-top:16px}
+.regime-cross-card>h2{font:750 20px var(--display);margin:4px 0 10px}
+.regime-cross-card>.interpretation{margin:0 0 12px}
+.regime-cross-findings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.regime-cross-finding{border:1px solid var(--line);border-radius:9px;padding:13px;background:#fbfcfd;min-width:0}
+.regime-cross-finding b{font-size:12px}
+.regime-cross-finding p{font-size:11px;line-height:1.6;color:var(--muted);margin:6px 0 0}
+body.theme-dark .regime-card{background:#132334;border-color:var(--line)}
+body.theme-dark .regime-metric,body.theme-dark .regime-cross-finding{background:#172b3e;border-color:var(--line)}
+body.theme-dark .regime-card-takeaway{background:#173c38;color:#b8d7d1}
+@media(max-width:1150px){.regime-cards-grid{grid-template-columns:1fr}.regime-metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.regime-cross-findings{grid-template-columns:1fr}}
+@media(max-width:760px){.regime-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
