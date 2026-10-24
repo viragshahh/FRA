@@ -284,3 +284,29 @@ body.theme-dark .backtest-panel-interpretation{border-color:var(--line)}
  .backtest-period-table-wrap table{min-width:0}
  .backtest-period-intro{padding:12px}
 }
+
+
+/* Final VaR layout correction: keep all three regimes visible in one row on desktop */
+#view-backtest .backtest-period-comparison{
+ display:grid !important;
+ grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+ gap:10px;
+ width:100%;
+}
+#view-backtest .backtest-period-panel{min-width:0;max-width:100%;overflow:hidden}
+#view-backtest .backtest-period-table-wrap{min-width:0;width:100%;overflow:hidden;padding:0 6px}
+#view-backtest .backtest-period-table-wrap table{width:100%;min-width:0;table-layout:fixed;border-collapse:collapse}
+#view-backtest .backtest-period-table-wrap th,
+#view-backtest .backtest-period-table-wrap td{padding:6px 3px;overflow-wrap:anywhere;word-break:normal}
+#view-backtest .backtest-period-table-wrap th{font-size:8px}
+#view-backtest .backtest-period-table-wrap td{font-size:9px}
+#view-backtest .backtest-period-table-wrap th:nth-child(1){width:29%}
+#view-backtest .backtest-period-table-wrap th:nth-child(2){width:17%}
+#view-backtest .backtest-period-table-wrap th:nth-child(3){width:28%}
+#view-backtest .backtest-period-table-wrap th:nth-child(4){width:26%}
+#view-backtest .backtest-panel-interpretation{padding:9px 10px 11px}
+#view-backtest .backtest-panel-interpretation p{font-size:10px;line-height:1.45;margin:0;color:var(--muted)}
+#view-backtest .backtest-pvalue-interpretation{display:none}
+@media(max-width:700px){
+ #view-backtest .backtest-period-comparison{grid-template-columns:1fr !important}
+}
